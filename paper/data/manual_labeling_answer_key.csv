@@ -1,0 +1,115 @@
+id,condition,text,haiku_is_creation,haiku_is_removal,haiku_is_adjustment,haiku_categories
+P0293,claude_capped,"Two fixes:
+
+1) Both bottom dotted containers have far too much bottom space. Reduce their bottom padding to ~30px so each container's bottom border sits just ~30px below its last box. Result: the LEFT container should end around y=955 (total height ~505px) and the RIGHT container around y=993 (total height ~545px), i.e. nothing extends past ~1000px on the page.
+
+2) In the top dotted container, reduce the left group's left padding so box-1's left edge sits ~33px from the page's left edge, aligning with box-6 below.
+
+Keep all labels box-1 … box-15 unchanged and visible.",0,0,1,Adjustment
+P0285,claude_capped,"Build an HTML wireframe, plain boxes with visible bordered outlines and the exact text label centered inside each. Page width ~1080px, padding 30px. Structure top to bottom:
+
+1) A full-width dashed-border container (height ~170px) holding a left group and a right group on one row, vertically centered. Left group: box-1 (~115x55) then box-2 (~220x55), 25px gap, starting at left edge. Right group aligned to the right edge: box-3 (~115x55), box-4 (~115x55), box-5 (~115x55) with 8px gaps.
+
+2) Below it, a row: box-6 on the left (~120px wide, 195px tall). To its right a column starting at x~168: box-7 (~300x62), then below it a row with box-8 (~120x58) and box-9 (~120x58) with 8px gap.
+
+3) Below, two dashed-border containers side by side with a 20px gap: left one ~500px wide, right one ~505px wide, both with 18px inner padding. Left contains stacked boxes: box-10 (height 62), box-11 (height 195), box-12 (height 130). Right contains: box-13 (height 62), box-14 (height 235), box-15 (height 110). Right container sits ~15px lower is not needed; align tops.",1,0,0,Creation
+P0309,claude_capped,"One vertical fix inside container-1 only; keep all labels and everything else unchanged. The box-1 / box-2-3-4 row sits too high. Keep the 'container-1' label on its own line at the top-right, then increase the space between that label and the row to about 45px, and reduce the padding below the row to about 20px, so the row sits noticeably lower (roughly in the lower half of the container). Container-1's total height stays about 155px, and its top edge stays about 25px below the top of the page.",0,0,1,Adjustment
+P0294,claude_capped,"Both bottom dotted containers still extend too far down (their bottom borders run off past y=1000). Fix their bottom edges precisely: LEFT container's last box (box-12) should end at about y=935 and the container's dotted bottom border only ~20px below it, at about y=955 (total container height ~505px). RIGHT container: box-15 should end at about y=960 and its dotted bottom border ~33px below, at about y=993 (total height ~545px). Achieve this by reducing each container's bottom padding to ~20-30px, and if needed slightly increasing box-14 (~235px) and box-15 (~115px) heights so the right container's boxes fill down to y=960. Nothing on the page should extend below y=1000. Keep all labels box-1 … box-15 unchanged and visible.",0,0,1,Adjustment
+P0320,claude_capped,"Build an absolutely-positioned wireframe on a 1080x1080 white canvas; every box is a plain bordered rectangle with its label text centered inside, using exactly these labels. Left column of 8 small boxes, left edge x=20: box-1 at y=115, width 120, height 75; box-2 at y=205, width 155, height 75; box-3 at y=300, width 155, height 75; box-4 at y=396, width 120, height 75; box-5 at y=510, width 120, height 75; box-6 at y=601, width 155, height 75; box-7 at y=696, width 120, height 75; box-8 at y=791, width 135, height 75. Right area: box-9 at x=250, y=110, width 300, height 380. box-10 at x=250, y=555, width 555, height 78. box-11 at x=250, y=710, width 363, height 82. box-12 at x=820, y=700, width 220, height 102. box-13 at x=250, y=871, width 395, height 96. box-14 at x=760, y=871, width 280, height 96.",1,0,0,Creation
+P0313,claude_capped,"Two refinements:
+
+1) In both dashed containers, put the container label on its own line at the top-right, above the inner boxes, so it no longer overlaps them. Give each container ~12px inner padding. This makes container-1 about 155px tall total (label line + the 50px box row) and container-2 about 110px tall (label line + the 50px box row).
+
+2) Add ~28px padding on the left and right edges of the whole page and ~28px at the top and bottom, so all boxes and containers are inset from the page edges rather than nearly touching them; keep the three-column and two-column widths proportional to the new content width.",0,0,1,Adjustment
+P0319,claude_no_thinking,"Fix a few structural details: (a) box-10 should be ~415px wide but sit inside the left container starting at the same left inset as box-11 — keep it, it's fine; instead make the left container's contents inset ~15px and box-13 in the right container ~375px wide starting at the same left inset as box-14 (already OK). (b) Most importantly, the vertical spacing: reduce the gap between box-7 and the box-8/box-9 row so box-7's bottom edge is only ~8px above them, and make box-6 span the full height of that group (top aligned with box-7's top, bottom aligned with the bottom of box-8/box-9 plus a little, ~190px total). (c) Remove the 'container-1', 'container-2', 'container-3' label texts from the corners — instead the containers must still show a dashed border, but print no label text (the target shows no container labels). (d) Reduce the top container's height to ~150px and keep the row vertically centered.",0,0,1,Adjustment
+P0329,claude_no_thinking,"Build an HTML wireframe on a white page (canvas about 1080x1080px) using absolutely positioned divs, each with a thin 1px solid black border, slightly rounded corners, and its label text centered inside in a monospace font. Create exactly these boxes with these labels and positions (left, top, width, height in px):
+
+Left column (stacked, small boxes):
+- box-1 at left 20, top 113, width 120, height 78
+- box-2 at left 20, top 205, width 153, height 78
+- box-3 at left 20, top 300, width 153, height 78
+- box-4 at left 20, top 396, width 120, height 76
+- box-5 at left 20, top 510, width 120, height 76
+- box-6 at left 20, top 600, width 153, height 78
+- box-7 at left 20, top 700, width 120, height 68
+- box-8 at left 20, top 792, width 136, height 74
+
+Main area:
+- box-9 at left 250, top 110, width 300, height 380
+- box-10 at left 250, top 555, width 553, height 80
+- box-11 at left 250, top 710, width 363, height 82
+- box-12 at left 820, top 700, width 220, height 102
+- box-13 at left 250, top 872, width 396, height 94
+- box-14 at left 760, top 870, width 280, height 98",1,0,0,Creation
+P0318,claude_no_thinking,"Two structural fixes: (1) In the left dotted container, box-10 should be inset from the container's left edge by about 18px (so it starts slightly right of box-11/box-12's left edge is not needed — instead make box-10 slightly narrower than box-11 and box-12: box-10 about 415px wide, box-11 and box-12 full inner width ~470px). Similarly in the right dotted container, box-13 about 375px wide while box-14 and box-15 stay full inner width. (2) The right dotted container should be slightly taller than the left one — extend it so its bottom edge sits about 40px lower than the left container's bottom edge.",0,0,1,Adjustment
+P0328,claude_no_thinking,"Build an HTML wireframe on a white page 1080px wide and about 1080px tall, using absolutely positioned divs with 1px solid black borders, each containing its label text centered in a monospace font. Place these boxes at exactly these positions (left, top, width, height in px), with the exact label text shown:
+- box-1: left 40, top 58, width 360, height 71
+- box-2: left 44, top 214, width 154, height 70
+- box-3: left 44, top 304, width 173, height 70
+- box-4: left 44, top 394, width 134, height 70
+- box-5: left 44, top 639, width 120, height 70
+- box-6: left 44, top 729, width 145, height 70
+- box-7: left 44, top 819, width 120, height 70
+- box-8: left 290, top 214, width 238, height 70
+- box-9: left 290, top 300, width 519, height 180
+- box-10: left 864, top 214, width 154, height 70
+- box-11: left 864, top 300, width 172, height 288
+- box-12: left 864, top 760, width 137, height 71
+- box-13: left 864, top 851, width 120, height 70",1,0,0,Creation
+P0326,claude_no_thinking,"Build an HTML wireframe page, full width, with plain bordered boxes each printing its exact label text inside, centered. Use a page container with about 30px padding. Structure top to bottom:
+
+1) A dashed-border header container labeled 'container-1' (label printed in its top-right corner, small text). Inside it, a row: on the left a bordered box labeled 'box-1' about 220px wide and 50px tall; pushed to the far right, three bordered boxes labeled 'box-2', 'box-3', 'box-4' side by side, each about 115px, 90px, 115px wide and 50px tall with small gaps.
+
+2) A row of three equal-width bordered boxes labeled 'box-5', 'box-6', 'box-7', each roughly one-third of the width with ~18px gaps, each about 250px tall, label centered vertically.
+
+3) A two-column area below: the left column is about 23% wide, the right column fills the rest, with a gap between them.
+   - Left column stacked vertically: 'box-8' (about 55px tall), then 'box-9' (about 225px tall), then 'box-10' (about 140px tall), with small vertical gaps.
+   - Right column stacked vertically: 'box-11' (about 55px tall but only about half the column width, aligned left), then 'box-12' (full column width, about 95px tall), then 'box-13' (full column width, about 125px tall), with small vertical gaps.
+
+4) A dashed-border footer container labeled 'container-2' (label printed in its top-right corner). Inside it, on the left, two small bordered boxes labeled 'box-14' and 'box-15' side by side, each about 115px wide and 50px tall.
+
+Keep all labels visible as text inside their elements.",1,0,0,Creation
+P0330,claude_no_thinking,"Create an HTML page with a plain white background using absolutely positioned bordered rectangles (1px solid black), each showing its label text centered in a monospace font. Canvas is 1080x1080px. Place these boxes exactly:
+- box-1: left 40px, top 57px, width 360px, height 73px
+- box-2: left 44px, top 213px, width 154px, height 71px
+- box-3: left 44px, top 303px, width 173px, height 71px
+- box-4: left 44px, top 394px, width 133px, height 70px
+- box-5: left 43px, top 639px, width 121px, height 70px
+- box-6: left 43px, top 729px, width 146px, height 70px
+- box-7: left 43px, top 820px, width 122px, height 69px
+- box-8: left 289px, top 213px, width 240px, height 71px
+- box-9: left 289px, top 303px, width 520px, height 176px
+- box-10: left 863px, top 213px, width 155px, height 71px
+- box-11: left 863px, top 300px, width 173px, height 288px
+- box-12: left 863px, top 761px, width 138px, height 69px
+- box-13: left 863px, top 852px, width 120px, height 70px",1,0,0,Creation
+P0175,claude_uncapped,"Two small refinements: (1) make the box labeled 'box-8' narrower than the rest of the left column — about 185px wide, left-aligned, while 'box-9' and 'box-10' stay the full ~230px column width. (2) Slightly increase the vertical gaps between the major rows (row of box-5/6/7, the two-column area, and container-2) by a few pixels each so the bottom container-2 sits closer to the bottom of the page with little empty space below it.",0,0,1,Adjustment
+P0128,claude_uncapped,"Two adjustments: (1) Add about 75px of empty space above box-1 at the top of the page. (2) Fix container-1: set its height to about 490px and give it about 60px of top padding before box-9 and only about 20px of bottom padding after box-13, so the five inner boxes (box-9 through box-13) fill the container vertically and there is no large empty gap at the bottom.",0,0,1,Adjustment
+P0076,claude_uncapped,"Two spacing fixes: (a) reduce the gap between 'box-8' and 'box-9' to about 8px so they sit nearly touching, and make each ~120px wide so together with the gap they span the same width as 'box-7' above them (~300px, left edges aligned with box-7's left edge); (b) reduce the inner horizontal padding of the top dotted header container and of the two lower dotted containers to about 15px, so 'box-1' starts near the container's left edge and 'box-5' ends near its right edge, and 'box-10'/'box-11'/'box-12' and 'box-13'/'box-14'/'box-15' nearly fill their containers' width.",0,0,1,Adjustment
+P0075,claude_uncapped,"Build an HTML wireframe page (plain boxes with visible borders, each box printing its label text as centered content). Overall page width ~1080px with ~30px side margins.
+
+1) Top header container (dotted border, full width, ~155px tall): inside it a left group with two boxes side by side — 'box-1' (~110px wide) and 'box-2' (~220px wide), both ~60px tall, vertically centered — and a right group aligned to the right edge with three boxes side by side: 'box-3' (~115px), 'box-4' (~120px), 'box-5' (~115px), all ~60px tall.
+
+2) Below the header, a row: a tall box 'box-6' (~120px wide, ~195px tall) on the left; to its right a column containing 'box-7' (~300px wide, ~60px tall) on top, and below it a row of two boxes 'box-8' (~120px wide) and 'box-9' (~120px wide), each ~60px tall. This whole group only occupies the left half of the page; the right half is empty.
+
+3) Below that, two dotted containers side by side, each ~48% of the page width, with a gap between them. Left container holds three stacked boxes, each nearly full container width: 'box-10' (~65px tall), 'box-11' (~195px tall), 'box-12' (~130px tall). Right container holds three stacked boxes: 'box-13' (~65px tall), 'box-14' (~240px tall), 'box-15' (~110px tall). The right container is slightly taller and shifted down slightly at the bottom compared to the left one.",1,0,0,Creation
+P0077,claude_uncapped,"Inside the two lower dotted containers, make the first box of each column narrower than the ones below it: 'box-10' should be about 80% of the container's inner width (left-aligned, so its right edge stops noticeably short of 'box-11'/'box-12' right edges), and likewise 'box-13' should be about 78% of its container's inner width, left-aligned, stopping short of 'box-14'/'box-15' right edges. Keep box-11, box-12, box-14, box-15 at full inner width as they are.",0,0,1,Adjustment
+P0082,claude_uncapped,"Vertical spacing polish: add ~30px padding at the top of the page (so the dotted header container starts ~30px down instead of at the very top edge), make the header container ~175px tall, add ~30px vertical gap between the header container and the 'box-6'/'box-7'/'box-8'/'box-9' row, and ~25px gap between that row and the two lower dotted containers. Keep all widths and labels unchanged.",0,0,1,Adjustment
+P0179,gemini,"Adjust the alignment and sizing in the middle section: decrease the width of the left column (containing box-8, box-9, and box-10) to about 25% of the page width. Ensure box-11, box-12, and box-13 in the right column are left-aligned and do not stretch to the full width of their container, particularly box-11 which should be shorter. Increase the vertical spacing between the row containing boxes 5, 6, 7 and the row below it.",0,0,1,Adjustment
+P0269,gemini,"Adjust the column widths and element sizes: the left column containing box-2 through box-7 should be much narrower. In the middle column, box-9 should be wider than box-8. In the right column, box-11 should be taller and box-10, box-12, and box-13 should be narrower. Ensure box-1 is left-aligned above the left and middle columns.",0,0,1,Adjustment
+P0083,gemini,"Below the navigation bar, create a layout section. On the left, add a vertical box labeled box-6. To the right of box-6, add a column containing box-7 at the top, and a row underneath it containing box-8 and box-9 side-by-side.",1,0,0,Creation
+P0272,gemini,"Adjust the horizontal layout: move box-8 and box-9 significantly further to the right, closer to box-10 and box-11. Make box-9 wider, so its right edge ends roughly halfway across the total page width. In the right column, make box-11 much taller, extending its bottom edge well below the bottom edge of box-9. Ensure box-10 and box-11 are left-aligned and have equal width. Move box-12 and box-13 further down and to the right so they are right-aligned with the right edge of box-11, with box-13 being slightly narrower than box-12.",0,0,1,Adjustment
+P0177,gemini,"Adjust the middle section's layout: box-11, box-12, and box-13 should span the full width of their column, making them much wider than boxes 8, 9, and 10. Also, ensure box-11, box-12, and box-13 are stacked vertically, with box-11 at the top, followed by box-12, and then box-13.",0,0,1,Adjustment
+P0242,gemini,"Adjust the layout to match the target: box-1 should not span the full width, it should be a smaller box at the top left. The three columns should have significant spacing between them. Make boxes 2 through 7 much smaller and left-aligned. Box-9 should be wider than it is tall, and box-11 should be taller than box-9. Align box-8 above the start of box-9, and box-10 above the start of box-11. Ensure there is large vertical whitespace between the (box-2,3,4) group and the (box-5,6,7) group, and also between box-11 and box-12.",0,0,1,Adjustment
+P0029,human,undo the changes,0,0,1,Adjustment
+P0058,human,"ok not bad but the boxes on the two sections on the bottom shouldn't be on the same line, each box go to the next row",0,0,1,Adjustment
+P0036,human,"let box 8 be small, sitting on th top of a tall box 9",0,0,1,Adjustment
+P0001,human,"Remove the ""box-X"" text from the boxes, as well as the small ""container-1"" text",0,0,1,Adjustment
+P0021,human,"in s3, place box-3. left aligned. it's width should be 1/6.5 of page width, and it should have a right padding of 10% of page width, same as box-2",1,0,1,Creation+Adjustment
+P0055,human,"Create a layout where box-1 is a full-width header block at the very top, and box-2 is a full-width block directly underneath it. Below box-2, place box-3 on the left and box-4 on the right side by side. Underneath that row, place three boxes side by side: box-5, box-6, and box-7. Below this, place box-8 as a single full-width block. Finally, include a dashed container labeled container-1 enclosing a vertical stack of box-9, box-10, box-11, box-12, and box-13",1,0,1,Creation+Adjustment
+P0208,qwen,Add a new row below 'box-7' containing two boxes labeled 'box-8' and 'box-11'.,1,0,0,Creation
+P0182,qwen,"Create a container labeled 'container-1' containing a row with 'box-1', 'box-2', 'box-3', and 'box-4'.",1,0,0,Creation
+P0138,qwen,Create a container labeled 'container-1' below 'box-8'.,1,0,0,Creation
+P0157,qwen,Create box-5 below box-3.,1,0,0,Creation
+P0207,qwen,"Add two boxes labeled 'box-12' and 'box-13' below 'box-11', stacked vertically.",1,0,0,Creation
+P0120,qwen,"Adjust the layout so that 'box-6' is positioned to the left of 'box-7', 'box-8', and 'box-9', ensuring they are aligned horizontally.",0,0,1,Adjustment

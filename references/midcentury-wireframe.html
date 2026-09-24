@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mid Century — Wireframe</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#ffffff;color:#ffffff}
+  .page{max-width:1080px;margin:0 auto;background:#ffffff;min-height:1080px;display:flex;flex-direction:column;justify-content:center}
+  .b{background:#ffffff;border:1px solid #000000;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:30px;color:#000000;letter-spacing:.04em;overflow:hidden;min-width:120px;min-height:55px}
+  /* hnav (justify-content:flex-end) hugs the right edge, same corner as the
+     container-1 badge — was align-items:center in a fixed 78px bar, which
+     doesn't clear the badge at any height. Top-aligned with matching top
+     padding instead, same fix as .card/.panel/header (stickynotes). */
+  header{background:#ffffff;border:1px dashed #000000;display:flex;align-items:flex-start;justify-content:space-between;padding:57px 30px 21px}
+  .htitles{display:flex;flex-direction:column;gap:9px}
+  .hnav{display:flex;gap:8px;flex-wrap:wrap;width:520px;justify-content:flex-end}
+  .cards{display:flex;gap:18px;padding:34px 30px}
+  .cards .b{flex:1;height:241px}
+  .body{display:grid;grid-template-columns:230px 1fr;gap:26px;padding:0 30px 39px}
+  .col{display:flex;flex-direction:column;gap:16px}
+  .foot{background:#ffffff;border:1px dashed #000000;display:flex;gap:14px;padding:21px 30px;flex-wrap:wrap}
+  .ctnr{position:relative}
+  .ctag{position:absolute;top:4px;right:4px;z-index:5;background:rgba(255, 255, 255, 0.55);color:#000000;font-family:monospace;font-size:24px;letter-spacing:.03em;padding:3px 6px;border-radius:2px;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Genuine <header> tag, full-width bar at the top: header container. -->
+  <header class="ctnr">
+    <span class="ctag">container-1</span>
+    <div class="htitles">
+      <div class="b" style="width:220px;height:26px">box-1</div>
+    </div>
+    <div class="hnav">
+      <div class="b" style="width:120px;height:14px">box-2</div>
+      <div class="b" style="width:90px;height:14px">box-3</div>
+      <div class="b" style="width:110px;height:14px">box-4</div>
+    </div>
+  </header>
+
+  <div class="cards">
+    <div class="b">box-5</div>
+    <div class="b">box-6</div>
+    <div class="b">box-7</div>
+  </div>
+
+  <div class="body">
+    <!-- Left column: narrow (230px), structurally distinct from the wide
+         (1fr) right column, but it and its children (box-8/9/10) use the
+         same .b styling as ordinary page content — no visual boundary of
+         its own — so container-2 was removed and its boxes are now plain
+         leaves. -->
+    <div class="col">
+      <div class="b" style="height:22px;width:80%">box-8</div>
+      <div class="b" style="height:195px">box-9</div>
+      <div class="b" style="height:117px">box-10</div>
+    </div>
+    <div class="col">
+      <div class="b" style="height:24px;width:50%">box-11</div>
+      <div class="b" style="height:91px">box-12</div>
+      <div class="b" style="height:117px">box-13</div>
+    </div>
+  </div>
+
+  <!-- Bottom-most full-width bar: footer container (no <footer> tag, but
+       passes the literal "bottom-most full-width bar" test). -->
+  <div class="foot ctnr">
+    <span class="ctag">container-2</span>
+    <div class="b" style="width:70px;height:16px">box-14</div>
+    <div class="b" style="width:60px;height:16px">box-15</div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,39 @@
+.sc-empty { color: #a8a8a8; font-size: 13px; }
+
+.sc-root { display: flex; gap: clamp(24px, 4vw, 56px); align-items: flex-start; }
+
+.sc-pane { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+
+/* 1080/900 matches SessionDetail's own reference/output frames — H2A pages
+   are 1080-wide with variable height, not the fixed-square canvas the PE
+   corpus uses, so this stays consistent with the detail page these link to. */
+.sc-frame { width: 100%; aspect-ratio: 1080/900; background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #2a2a2a; touch-action: none; }
+.sc-pane--ref .sc-frame { background: #242424; }
+
+.sc-frame--paused { outline: 3px solid #4a9eff; outline-offset: 2px; }
+
+/* The real instruction text for the currently-shown turn — advances on the
+   same tick as the image above it, and is an equally valid pause target
+   (shares the image's onPointerDown/Up/Leave handlers, both driven by the
+   one shared `paused` state), so holding either one freezes both together. */
+.sc-prompt { width: 100%; box-sizing: border-box; padding: 12px 14px; background: #1f2023; border: 1px solid #2a2a2a; border-radius: 8px; font-size: 14px; line-height: 1.5; color: #c8c8c8; white-space: pre-wrap; cursor: pointer; touch-action: none; }
+.sc-prompt--paused { outline: 3px solid #4a9eff; outline-offset: 2px; }
+
+/* No color set — inherits .exp-root's #eaeaea for the plain (non-link)
+   reference-name usage; the link usage instead combines with .exp-link
+   (Explore.css), which needs no color declared here to fight for
+   specificity against. */
+.sc-label { font-size: 15px; text-align: center; }
+
+.sc-nav { display: flex; align-items: center; gap: 10px; }
+.sc-nav-btn { background: #1f2023; border: 1px solid #2a2a2a; color: #eaeaea; border-radius: 6px; width: 32px; height: 32px; cursor: pointer; font-size: 15px; line-height: 1; }
+.sc-nav-btn:hover { background: #2a2b2f; }
+.sc-dots { display: flex; gap: 7px; }
+.sc-dot { width: 9px; height: 9px; border-radius: 50%; border: none; background: #3a3b3f; cursor: pointer; padding: 0; }
+.sc-dot--active { background: #4a9eff; }
+/* Condition-colored dots carry their own background via inline style
+   (which already wins over these rules) — active/inactive is shown as
+   opacity + a ring instead of a background swap, so the dot's actual
+   condition color is never lost. */
+.sc-dot--colored { opacity: 0.5; }
+.sc-dot--colored.sc-dot--active { opacity: 1; box-shadow: 0 0 0 2px #fff; }

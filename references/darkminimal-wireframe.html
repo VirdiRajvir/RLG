@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dark Minimal — Wireframe</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#ffffff;color:#000000}
+  .page{max-width:1080px;margin:0 auto;min-height:1080px;background:#ffffff;display:grid;grid-template-columns:210px 1fr;align-content:center}
+  .b{background:#ffffff;border:1px solid #000000;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:30px;color:#000000;letter-spacing:.04em;overflow:hidden;min-width:120px;min-height:80px}
+  .side{padding:49px 20px;display:flex;flex-direction:column;gap:15px}
+  /* Was a horizontal icon+label row — at 3x text size, two 120px-floor boxes
+     side by side no longer fit the 210px sidebar column's ~170px content
+     width, so this stacks icon above label instead of narrowing the boxes
+     below their readable-text floor or widening the grid column (which
+     would change the page's internal proportions). */
+  .si{display:flex;flex-direction:column;align-items:flex-start;gap:11px;margin-top:19px}
+  .main{padding:65px 40px;position:relative;display:flex;flex-direction:column;gap:65px}
+  .sec{display:flex;align-items:center;justify-content:space-between;gap:20px}
+</style>
+</head>
+<body>
+<!-- 210px sidebar column previously carried container-1, but it and its
+     children use the same .b/.si styling as ordinary page content — no
+     visual boundary of its own — so container-1 was removed and all boxes
+     are now plain leaves. No header or footer tag/bar exists in this file.
+     The two remaining .b.red icon boxes (originally image-1/2/3 before the
+     box-N relabel, one dropped in the reference trim) are now stacked above
+     their label (see .si comment above) rather than beside it. 0 containers
+     in this file. -->
+<div class="page">
+  <aside class="side">
+    <div class="si"><div class="b red" style="width:120px;height:42px">box-1</div><div class="b" style="width:90%">box-2</div></div>
+    <div class="b" style="height:14px;width:90%">box-3</div>
+    <div class="b" style="height:14px;width:70%">box-4</div>
+    <div class="si"><div class="b red" style="width:120px;height:42px">box-5</div><div class="b" style="width:90%">box-6</div></div>
+    <div class="b" style="height:14px;width:70%">box-7</div>
+    <div class="b" style="height:14px;width:80%">box-8</div>
+  </aside>
+  <main class="main">
+    <div class="b" style="width:300px;height:380px">box-9</div>
+    <div class="b" style="height:40px;width:70%">box-10</div>
+    <div class="sec"><div class="b" style="height:34px;width:46%">box-11</div><div class="b faint" style="width:220px;height:103px">box-12</div></div>
+    <div class="sec"><div class="b" style="height:95px;width:50%">box-13</div><div class="b faint" style="width:280px;height:103px">box-14</div></div>
+  </main>
+</div>
+</body>
+</html>

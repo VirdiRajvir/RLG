@@ -1,0 +1,10 @@
+.sd-panels { display: flex; gap: clamp(16px, 2vw, 28px); }
+.sd-panel { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+.sd-panel-label { font-size: 13px; color: #a8a8a8; }
+.sd-frame { width: 100%; aspect-ratio: 1080/900; background: #fff; border-radius: 8px; overflow: hidden; }
+.sd-scrubber { display: flex; gap: 8px; margin-top: 20px; flex-wrap: wrap; }
+.sd-scrub-btn { padding: 7px 12px; background: #1f2023; border: 1px solid #2a2a2a; border-radius: 6px; color: #eaeaea; cursor: pointer; font-size: 13px; }
+.sd-scrub-btn--active { background: #4a9eff; color: #0d1b2a; }
+.sd-turn-detail { margin-top: 14px; }
+.sd-instruction { white-space: pre-wrap; font-size: 15px; max-width: 90ch; }
+.sd-score { color: #a8a8a8; font-size: 13px; }

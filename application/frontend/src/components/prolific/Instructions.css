@@ -1,0 +1,77 @@
+/* application/frontend/src/components/prolific/Instructions.css */
+.instr-card { max-width: 1090px; width: 100%; }
+.instr-eyebrow { font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; opacity: 0.6; }
+.instr-card h1 { font-size: 26px; margin: 6px 0 10px; }
+.instr-lede { font-size: 15px; line-height: 1.6; opacity: 0.85; max-width: 640px; }
+
+/* ── The loop diagram ── */
+.instr-loop {
+  display: flex;
+  align-items: stretch;
+  gap: 16px;
+  margin: 32px 0;
+}
+.instr-loop-card {
+  flex: 1;
+  background: var(--card, #1a1a1a);
+  border: 1px solid var(--line, #2a2a2a);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.instr-loop-icon {
+  width: 34px; height: 34px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: rgba(74, 158, 255, 0.14);
+  color: #4a9eff;
+}
+.instr-loop-visual {
+  height: 176px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #b4b4b4;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
+}
+.instr-loop-visual--ai { color: #4a9eff; }
+.instr-loop-visual--compare { gap: 8px; padding: 10px; }
+.instr-loop-visual--compare .instr-mockup { flex: 1; height: 100%; }
+.instr-mockup--draft { color: #8e8e8e; }
+.instr-loop-card h3 { font-size: 16px; margin: 2px 0 0; }
+.instr-loop-card p { font-size: 12px; line-height: 1.5; opacity: 0.75; margin: 0; }
+
+.instr-loop-arrow {
+  flex: 0 0 152px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #4a9eff;
+  text-align: center;
+}
+.instr-loop-arrow span { font-size: 11px; color: #8e8e8e; line-height: 1.35; }
+.instr-loop-arrow::after {
+  content: '';
+  width: 100%;
+  border-top: 2px dashed rgba(74, 158, 255, 0.4);
+  order: -1;
+  margin-bottom: 3px;
+}
+
+/* ── Quick facts grid ── */
+.instr-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 24px;
+  margin: 28px 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--line, #2a2a2a);
+}
+.instr-fact { display: flex; gap: 10px; align-items: flex-start; }
+.instr-fact-icon { flex-shrink: 0; margin-top: 2px; opacity: 0.85; color: #4a9eff; }
+.instr-fact h4 { font-size: 13px; margin: 0 0 2px; }
+.instr-fact p { font-size: 12px; line-height: 1.5; opacity: 0.75; margin: 0; }

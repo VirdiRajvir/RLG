@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apothecary — Wireframe</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#ffffff;color:#000000}
+  .page{max-width:1080px;margin:0 auto;min-height:1080px;background:#ffffff;display:grid;grid-template-columns:220px 1fr;align-content:center}
+  .b{background:#ffffff;border:1px solid #000000;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:30px;color:#000000;letter-spacing:.04em;overflow:hidden;min-width:120px;min-height:42px}
+  .side{padding:30px 24px;display:flex;flex-direction:column;gap:14px}
+  .main{padding:30px 40px 40px;display:flex;flex-direction:column;gap:22px}
+  .toprow{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+  .sec{display:flex;flex-direction:column;gap:10px}
+  .foot{display:flex;gap:12px;margin-top:14px}
+</style>
+</head>
+<body>
+<!-- 220px left column previously carried container-1, but it and its
+     children (box-1, box-2) use the same .b/.b.lotus styling as ordinary
+     page content — no visual boundary of its own — so container-1 was
+     removed and the boxes are now plain leaves. The trailing .foot link
+     row is NOT containerized as a footer: it's nested inside .main and
+     only spans the main column's width, not the full page width (same
+     reasoning as verde's rejected .foot), so it fails the literal
+     full-width footer test. No circularly-styled boxes found. 0 containers
+     in this file. -->
+<div class="page">
+  <aside class="side">
+    <div class="b" style="height:130px;width:90%">box-1</div>
+    <div class="b lotus" style="height:130px;width:110px;margin-top:auto">box-2</div>
+  </aside>
+  <main class="main">
+    <div class="toprow">
+      <div class="b" style="height:24px;width:240px">box-3</div>
+      <div class="b torii" style="width:120px;height:80px;flex-shrink:0">box-4</div>
+    </div>
+    <div class="b" style="height:46px;width:78%">box-5</div>
+    <div class="sec"><div class="b" style="height:22px;width:42%">box-6</div><div class="b" style="height:60px;width:84%">box-7</div><div class="b" style="height:48px;width:74%">box-8</div></div>
+    <div class="sec"><div class="b" style="height:22px;width:34%">box-9</div><div class="b" style="height:54px;width:80%">box-10</div></div>
+    <div class="sec"><div class="b" style="height:22px;width:28%">box-11</div><div class="b" style="height:40px;width:76%">box-12</div></div>
+    <div class="sec"><div class="b" style="height:22px;width:44%">box-13</div><div class="b" style="height:64px;width:84%">box-14</div><div class="b" style="height:44px;width:66%">box-15</div></div>
+    <div class="b tree" style="height:120px;width:240px;align-self:flex-end">box-16</div>
+    <div class="foot">
+      <div class="b" style="width:58px;height:18px">box-17</div>
+      <div class="b" style="width:58px;height:18px">box-18</div>
+      <div class="b" style="width:58px;height:18px">box-19</div>
+      <div class="b" style="width:58px;height:18px">box-20</div>
+      <div class="b" style="width:58px;height:18px">box-21</div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

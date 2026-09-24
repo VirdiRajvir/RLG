@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sticky Notes — Wireframe</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#ffffff;color:#000000}
+  .page{max-width:1080px;margin:0 auto;min-height:1080px;background:#ffffff;display:flex;flex-direction:column;justify-content:center}
+  .b{background:#ffffff;border:1px solid #000000;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:30px;color:#000000;letter-spacing:.04em;overflow:hidden;min-width:120px;min-height:65px}
+  /* box-5 (rightmost, hnav is margin-left:auto so it hugs the right edge)
+     shares the top-right corner with the container-1 badge — was
+     align-items:center in a fixed 66px bar, which doesn't push content
+     below the badge at any height. Top-aligned with matching top padding
+     instead, same fix as .panel/.card. */
+  header{background:#ffffff;display:flex;align-items:flex-start;gap:18px;padding:68px 30px 25px;border:1px dashed #000000}
+  .hnav{display:flex;gap:12px;margin-left:auto}
+  .intro{display:flex;gap:18px;padding:37px 30px 16px;align-items:flex-start}
+  .cards{display:flex;gap:16px;padding:12px 30px 47px;align-items:flex-start}
+  .card{flex:1;background:#ffffff;border:1px dashed #000000;padding:68px 14px 25px;display:flex;flex-direction:column;gap:16px;position:relative}
+  .col{display:flex;flex-direction:column;gap:14px}
+  .ctnr{position:relative}
+  .ctag{position:absolute;top:4px;right:4px;z-index:5;color:#fff;font-family:monospace;font-size:24px;letter-spacing:.03em;padding:3px 6px;border-radius:2px;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Genuine <header> tag: header container. No footer or sidebar exists
+       in this single-column layout, so none is forced (same as steel's
+       missing footer). Each .card below has a real background (#f1ecdc)
+       + border, distinct from the page background (#c9bfa6) — a genuine
+       visual boundary — so each gets its own container (container-2/3,
+       left to right). -->
+  <header class="ctnr">
+    <span class="ctag">container-1</span>
+    <div class="b" style="width:80px;height:20px">box-1</div>
+    <div class="b" style="width:220px;height:26px">box-2</div>
+    <div class="hnav">
+      <div class="b" style="width:120px;height:22px">box-3</div>
+      <div class="b" style="width:90px;height:22px">box-4</div>
+      <div class="b" style="width:100px;height:22px">box-5</div>
+    </div>
+  </header>
+
+  <div class="intro">
+    <div class="b" style="width:120px;height:186px">box-6</div>
+    <div class="col" style="width:300px">
+      <div class="b" style="height:40px">box-7</div>
+      <div style="display:flex;gap:8px"><div class="b" style="width:90px;height:18px">box-8</div><div class="b" style="width:70px;height:18px">box-9</div></div>
+    </div>
+  </div>
+
+  <div class="cards">
+    <div class="card">
+      <span class="ctag">container-2</span>
+      <div class="b" style="height:20px;width:88%">box-10</div>
+      <div class="b" style="height:186px">box-11</div>
+      <div class="b" style="height:124px">box-12</div>
+    </div>
+    <div class="card">
+      <span class="ctag">container-3</span>
+      <div class="b" style="height:20px;width:80%">box-13</div>
+      <div class="b" style="height:233px">box-14</div>
+      <div class="b" style="height:109px">box-15</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

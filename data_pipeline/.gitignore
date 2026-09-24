@@ -1,0 +1,13 @@
+node_modules/
+.env
+review.html
+review-generations.html
+review-prolific.html
+review-prolific.zip
+corpus-review.html
+_inspect/
+
+# Local data artifacts (judgment backups, restore points) — not source
+*_backup.json
+
+guide/

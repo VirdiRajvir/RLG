@@ -1,0 +1,54 @@
+/* application/frontend/src/components/prolific/TutorialGuide.css */
+.tg-root { position: fixed; inset: 0; z-index: 200; pointer-events: none; }
+.tg-dim { position: fixed; background: rgba(0, 0, 0, 0.6); pointer-events: none; }
+.tg-ring {
+  position: fixed;
+  border: 2px solid #4a9eff;
+  border-radius: 8px;
+  box-shadow: 0 0 0 4px rgba(74, 158, 255, 0.25);
+  pointer-events: none;
+}
+.tg-card {
+  position: fixed;
+  width: 300px;
+  background: var(--card, #1a1a1a);
+  border: 1px solid var(--line, #2a2a2a);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  pointer-events: auto;
+}
+.tg-step-count { font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6; }
+.tg-card h4 { margin: 6px 0; font-size: 15px; color: #ececec; }
+.tg-card p { margin: 0 0 14px; font-size: 13px; line-height: 1.5; opacity: 0.85; }
+.tg-actions { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+/* Matches the app's established button system (ChatInterface.css's .reset-btn
+   ghost style and .confirm-btn.send primary style) — these three previously
+   set only padding/radius/font-size and fell back to raw browser button
+   styling, i.e. dark system text on this dark card, which is why "Skip
+   walkthrough" was effectively invisible. */
+.tg-skip {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  color: #8e8e8e;
+  padding: 4px 0;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.15s;
+}
+.tg-skip:hover { color: #ececec; }
+.tg-nav { display: flex; gap: 8px; }
+.tg-prev, .tg-next {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.tg-prev { background: transparent; border: 1px solid #424242; color: #b4b4b4; }
+.tg-prev:hover:not(:disabled) { background: #2f2f2f; border-color: #565656; color: #ececec; }
+.tg-prev:disabled { opacity: 0.35; cursor: not-allowed; }
+.tg-next { background: #ececec; border: none; color: #212121; font-weight: 600; }
+.tg-next:hover { background: #ffffff; }

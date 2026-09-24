@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Zen Garden – Wireframe</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-main: #f5f5f0;
+    --header-bg: #3b5449;
+    --header-bg2: #2e4039;
+    --sidebar-bg: #d6e0d5;
+    --sidebar-bg2: #c8d9c6;
+    --section-bg: #dce8db;
+    --section-bg2: #c8d8c6;
+    --footer-bg: #2e4039;
+    --footer-strip: #223530;
+    --box-light: rgba(255,255,255,0.18);
+    --box-mid: rgba(255,255,255,0.28);
+    --box-dark: rgba(0,0,0,0.12);
+    --box-darker: rgba(0,0,0,0.18);
+    --box-sidebar: rgba(90,120,95,0.25);
+    --box-sidebar2: rgba(90,120,95,0.18);
+    --accent: #5a8a6a;
+    --text-box: #b0bfb0;
+  }
+
+  body {
+    font-family: Georgia, serif;
+    background: var(--bg-main);
+    color: #333;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--header-bg);
+    background-image:
+      radial-gradient(ellipse at 20% 50%, rgba(80,120,90,0.4) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 30%, rgba(40,70,55,0.5) 0%, transparent 50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+    height: 110px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='400' height='110' xmlns='http://www.w3.org/2000/svg'%3E%3Cellipse cx='60' cy='55' rx='50' ry='50' fill='rgba(255,255,255,0.04)'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    pointer-events: none;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+
+  .logo-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.12);
+    border: 2px solid rgba(255,255,255,0.2);
+    flex-shrink: 0;
+  }
+
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .box { background: var(--box-light); border-radius: 3px; }
+
+  /* header title boxes */
+  .h-title-big {
+    width: 240px; height: 28px;
+    background: rgba(255,255,255,0.22);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.05em;
+  }
+  .h-title-small {
+    width: 170px; height: 16px;
+    background: rgba(255,255,255,0.13);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(255,255,255,0.4); letter-spacing: 0.05em;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .h-nav-box {
+    width: 130px; height: 16px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(255,255,255,0.45); letter-spacing: 0.05em;
+  }
+  .h-arrow {
+    width: 28px; height: 28px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .h-arrow-inner {
+    width: 10px; height: 10px;
+    background: rgba(255,255,255,0.35);
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+  }
+
+  /* ── MAIN LAYOUT ── */
+  .page-body {
+    display: grid;
+    grid-template-columns: 1fr 260px;
+    max-width: 1080px;
+    margin: 0 auto;
+    background: white;
+  }
+
+  /* ── INTRO STRIP ── */
+  .intro-strip {
+    grid-column: 1 / -1;
+    background: white;
+    padding: 28px 40px 18px;
+    border-bottom: 1px solid #e8ede7;
+  }
+
+.download-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .dl-label { width: 120px; height: 22px; background: #d0d5d0; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 10px; color: rgba(0,0,0,0.28); letter-spacing: 0.05em; }
+  .dl-btn {
+    width: 80px; height: 22px;
+    background: #e2ebe2;
+    border: 1px solid #b8ccb8;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 10px; color: rgba(0,0,0,0.3); letter-spacing: 0.05em;
+  }
+  .dl-label2 { width: 30px; height: 22px; background: #d0d5d0; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-family: monospace; font-size: 10px; color: rgba(0,0,0,0.28); letter-spacing: 0.05em; }
+  .dl-btn2 {
+    width: 65px; height: 22px;
+    background: #e2ebe2;
+    border: 1px solid #b8ccb8;
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 10px; color: rgba(0,0,0,0.3); letter-spacing: 0.05em;
+  }
+
+  /* ── MAIN CONTENT ── */
+  .main-content {
+    padding: 32px 40px 40px;
+    background: white;
+  }
+
+  .content-section { margin-bottom: 38px; }
+
+  .section-heading {
+    width: 260px; height: 26px;
+    background: #b5c9b5;
+    border-radius: 3px;
+    margin-bottom: 18px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 10px; color: rgba(0,0,0,0.28); letter-spacing: 0.05em;
+  }
+  .section-heading.wide { width: 200px; }
+  .section-heading.narrow { width: 180px; }
+  .section-heading.med { width: 130px; }
+
+  .para-block {
+    width: 100%;
+    background: #dde3dd;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 11px;
+    color: rgba(0,0,0,0.28);
+    letter-spacing: 0.05em;
+  }
+
+  .label-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 10px;
+    color: rgba(0,0,0,0.28);
+    letter-spacing: 0.05em;
+  }
+
+  .label-box-light {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 0.05em;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    background: var(--sidebar-bg);
+    padding: 0;
+    border-left: 1px solid #c0cfc0;
+  }
+
+  /* Design list section */
+  .sidebar-designs {
+    background: var(--sidebar-bg2);
+    padding: 22px 22px 28px;
+    border-bottom: 1px solid #b8cbb8;
+  }
+
+  .sidebar-item {
+    margin-bottom: 18px;
+  }
+  .sidebar-design-name {
+    width: 100%; height: 18px;
+    background: rgba(60,100,70,0.3);
+    border-radius: 2px;
+    margin-bottom: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(0,0,0,0.3); letter-spacing: 0.05em;
+  }
+  .sidebar-design-name.w70 { width: 70%; }
+  .sidebar-design-name.w85 { width: 85%; }
+  .sidebar-design-name.w55 { width: 55%; }
+  .sidebar-design-name.w75 { width: 75%; }
+  .sidebar-design-name.w65 { width: 65%; }
+  .sidebar-design-name.w90 { width: 90%; }
+  .sidebar-design-author {
+    width: 55%; height: 16px;
+    background: rgba(60,100,70,0.18);
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(0,0,0,0.25); letter-spacing: 0.05em;
+  }
+  .sidebar-design-author.w45 { width: 45%; }
+  .sidebar-design-author.w50 { width: 50%; }
+  .sidebar-design-author.w60 { width: 60%; }
+  .sidebar-design-author.w35 { width: 35%; }
+
+  /* Archives */
+  .sidebar-archives {
+    background: var(--sidebar-bg);
+    padding: 18px 22px 22px;
+    border-bottom: 1px solid #b8cbb8;
+  }
+
+  /* Resources */
+  .sidebar-resources {
+    background: var(--sidebar-bg2);
+    padding: 18px 22px 28px;
+  }
+
+  .sidebar-link-box {
+    width: 100%; height: 18px;
+    background: rgba(60,100,70,0.22);
+    border-radius: 2px;
+    margin-bottom: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(0,0,0,0.28); letter-spacing: 0.05em;
+  }
+  .sidebar-link-box.w80 { width: 80%; }
+  .sidebar-link-box.w65 { width: 65%; }
+  .sidebar-link-box.w90 { width: 90%; }
+  .sidebar-link-box.w70 { width: 70%; }
+  .sidebar-link-box.w55 { width: 55%; }
+  .sidebar-link-box.w75 { width: 75%; }
+
+  .sidebar-archive-box {
+    width: 100%; height: 18px;
+    background: rgba(60,100,70,0.22);
+    border-radius: 2px;
+    margin-bottom: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(0,0,0,0.28); letter-spacing: 0.05em;
+  }
+  .sidebar-archive-box.w60 { width: 60%; }
+  .sidebar-archive-box.w80 { width: 80%; }
+
+  /* ── LOWER TINTED SECTIONS ── */
+  .lower-sections {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 260px;
+  }
+
+  .tinted-main {
+    background: var(--section-bg);
+    padding: 32px 40px 36px;
+  }
+
+  .tinted-sidebar {
+    background: var(--section-bg2);
+    border-left: 1px solid #b8cbb8;
+  }
+
+  /* ── FOOTER ATTRIBUTION ── */
+  .footer-attr {
+    background: var(--footer-bg);
+    background-image:
+      radial-gradient(ellipse at 30% 50%, rgba(80,130,95,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse at 75% 40%, rgba(30,60,45,0.4) 0%, transparent 55%);
+    padding: 32px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .footer-attr-box {
+    height: 18px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 3px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 9px; color: rgba(255,255,255,0.45); letter-spacing: 0.05em;
+  }
+  .footer-attr-box.w50 { width: 50px; }
+  .footer-attr-box.w90 { width: 90px; }
+  .footer-attr-box.w70 { width: 70px; }
+  .footer-attr-box.w110 { width: 110px; }
+  .footer-attr-box.w60 { width: 60px; }
+  .footer-attr-box.w80 { width: 80px; }
+  .footer-attr-box.w130 { width: 130px; }
+  .footer-attr-box.accent { background: rgba(255,255,255,0.28); }
+
+  /* ── FOOTER ICONS STRIP ── */
+  .footer-icons {
+    background: var(--footer-strip);
+    padding: 24px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .icon-circle {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.25);
+    background: transparent;
+    display: flex; align-items: center; justify-content: center;
+    font-family: monospace; font-size: 8px; color: rgba(255,255,255,0.45); letter-spacing: 0.03em;
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════ HEADER ═══════════════════════════════ -->
+<header>
+  <div class="header-left">
+    <div class="logo-circle"></div>
+    <div class="header-titles">
+      <div class="h-title-big">text</div>
+      <div class="h-title-small">text</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="h-nav-box">link</div>
+    <div class="h-arrow"><div class="h-arrow-inner"></div></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════ PAGE BODY ════════════════════════════ -->
+<div class="page-body">
+
+  <!-- INTRO STRIP -->
+  <div class="intro-strip">
+    <div class="para-block" style="height:40px;">text</div>
+    <div class="download-row">
+      <div class="dl-label">text</div>
+      <div class="dl-btn">link</div>
+      <div class="dl-label2">text</div>
+      <div class="dl-btn2">link</div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- Section 1 -->
+    <div class="content-section">
+      <div class="section-heading wide">text</div>
+      <div class="para-block" style="height:52px;">text</div>
+      <div class="para-block" style="height:36px;">text</div>
+      <div class="para-block" style="height:52px;">text</div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="content-section">
+      <div class="section-heading narrow">text</div>
+      <div class="para-block" style="height:52px;">text</div>
+      <div class="para-block" style="height:68px;">text</div>
+    </div>
+
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <!-- Design list -->
+    <div class="sidebar-designs">
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w85">link</div>
+        <div class="sidebar-design-author w45">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w55">link</div>
+        <div class="sidebar-design-author w35">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w45" style="width:40%">link</div>
+        <div class="sidebar-design-author w50">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w65">link</div>
+        <div class="sidebar-design-author w45">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w75">link</div>
+        <div class="sidebar-design-author w60">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w65">link</div>
+        <div class="sidebar-design-author w50">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w90">link</div>
+        <div class="sidebar-design-author w35">text</div>
+      </div>
+      <div class="sidebar-item">
+        <div class="sidebar-design-name w70">link</div>
+        <div class="sidebar-design-author w45">text</div>
+      </div>
+    </div>
+
+    <!-- Archives -->
+    <div class="sidebar-archives">
+      <div class="sidebar-archive-box w60">link</div>
+      <div class="sidebar-archive-box w80">link</div>
+    </div>
+
+    <!-- Resources -->
+    <div class="sidebar-resources">
+      <div class="sidebar-link-box w90">link</div>
+      <div class="sidebar-link-box w80">link</div>
+      <div class="sidebar-link-box w55">link</div>
+      <div class="sidebar-link-box w75">link</div>
+      <div class="sidebar-link-box w70">link</div>
+    </div>
+
+  </aside>
+
+  <!-- LOWER TINTED SECTIONS -->
+  <div class="lower-sections">
+    <div class="tinted-main">
+
+      <!-- Participation -->
+      <div class="content-section">
+        <div class="section-heading med" style="width:160px;background:#9ab89a;">text</div>
+        <div class="para-block" style="height:52px;background:#c5d4c5;">text</div>
+        <div class="para-block" style="height:36px;background:#c5d4c5;">text</div>
+        <div class="para-block" style="height:68px;background:#c5d4c5;">text</div>
+      </div>
+
+      <!-- Benefits -->
+      <div class="content-section">
+        <div class="section-heading med" style="width:120px;background:#9ab89a;">text</div>
+        <div class="para-block" style="height:52px;background:#c5d4c5;">text</div>
+      </div>
+
+    </div>
+    <div class="tinted-sidebar"></div>
+  </div>
+
+  <!-- REQUIREMENTS SECTION -->
+  <div class="lower-sections" style="background:#eef3ee;">
+    <div class="tinted-main" style="background:#eef3ee;">
+      <div class="content-section">
+        <div class="section-heading med" style="width:195px;background:#a8c0a8;">text</div>
+        <div class="para-block" style="height:52px;background:#cdd8cd;">text</div>
+        <div class="para-block" style="height:84px;background:#cdd8cd;">text</div>
+        <div class="para-block" style="height:36px;background:#cdd8cd;">text</div>
+        <div class="para-block" style="height:52px;background:#cdd8cd;">text</div>
+      </div>
+    </div>
+    <div class="tinted-sidebar" style="background:#dce8dc;border-left:1px solid #b8cbb8;"></div>
+  </div>
+
+</div><!-- end .page-body -->
+
+<!-- ═══════════════════════════════ FOOTER ATTRIBUTION ═══════════════════ -->
+<footer class="footer-attr">
+  <div class="footer-attr-box w50">text</div>
+  <div class="footer-attr-box w90 accent">link</div>
+  <div class="footer-attr-box w70">text</div>
+  <div class="footer-attr-box w110 accent">link</div>
+  <div class="footer-attr-box w60">text</div>
+  <div class="footer-attr-box w80 accent">link</div>
+  <div class="footer-attr-box w130">text</div>
+</footer>
+
+<!-- ═══════════════════════════════ FOOTER ICONS STRIP ═══════════════════ -->
+<div class="footer-icons">
+  <div class="icon-circle">button</div>
+  <div class="icon-circle">button</div>
+  <div class="icon-circle">button</div>
+  <div class="icon-circle">button</div>
+  <div class="icon-circle">button</div>
+</div>
+
+</body>
+</html>

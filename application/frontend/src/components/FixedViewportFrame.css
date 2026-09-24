@@ -1,0 +1,12 @@
+.fvf-frame { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.fvf-box { display: flex; align-items: center; justify-content: center; overflow: hidden; flex-shrink: 0; }
+.fvf-canvas { flex-shrink: 0; }
+/* pointer-events: none — the iframe is sandboxed to allow-same-origin only
+   (no allow-scripts), so nothing inside it can ever respond to a click
+   anyway; without this, a Link wrapping a FixedViewportFrame (e.g. a
+   session thumbnail card) never receives clicks that land on the visible
+   iframe surface, since iframes have their own document and don't bubble
+   pointer events up into the parent page. */
+.fvf-iframe { width: 100%; height: 100%; border: none; display: block; background: #242424; pointer-events: none; }
+.fvf-iframe--grayscale { filter: grayscale(100%); }
+.fvf-empty { display: flex; align-items: center; justify-content: center; height: 100%; opacity: 0.5; font-size: 13px; }

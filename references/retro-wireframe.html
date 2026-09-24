@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retro — Wireframe</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Comic Sans MS',Georgia,serif;background:#ffffff;color:#000000}
+  .page{max-width:1080px;margin:0 auto;min-height:1080px;background:#ffffff;padding:31px 0;display:flex;flex-direction:column;justify-content:center}
+  .col{width:520px;margin:0 auto;background:#ffffff;padding:31px 22px;display:flex;flex-direction:column;gap:14px;align-items:center}
+  .b{background:#ffffff;border:1px solid #000000;border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:30px;color:#000000;letter-spacing:.04em;overflow:hidden;min-width:120px;min-height:71px}
+  .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+  .full{width:100%}
+  .ctnr{position:relative}
+  .ctag{position:absolute;top:4px;right:4px;z-index:5;color:#000000;font-family:monospace;font-size:24px;letter-spacing:.03em;padding:3px 6px;border-radius:2px;pointer-events:none}
+</style>
+</head>
+<body>
+<!-- Only one container in this file: it's a single narrow (520px, ~48% of
+     the 1080px page) centered column — the topmost banner (text-1, now
+     box-1) fails the literal full-page-width test for a header, same
+     reasoning as steel's rejected banner, and there is no side column
+     structurally distinct from a main area, so no sidebar either. The
+     nested .col below (box-9 through box-13) DOES have a genuine visual
+     boundary — solid fill distinct from the page background — so it
+     becomes container-1. Every other box in this file (box-1 through
+     box-8) stays plain. All box-level accent classes (rainbow/yellow/
+     black/magenta/dashed) were removed corpus-wide for color consistency
+     — every box is now the same white fill regardless of role. -->
+<div class="page">
+  <div class="col">
+    <div class="b full" style="height:34px">box-1</div>
+    <div class="b full" style="height:18px;width:70%">box-2</div>
+    <div class="row full">
+      <div class="b" style="width:130px;height:75px">box-3</div>
+      <div class="b" style="height:75px;flex:1">box-4</div>
+    </div>
+    <div class="row"><div class="b" style="width:40px;height:34px">box-5</div><div class="b" style="width:60px;height:34px">box-6</div><div class="b" style="width:40px;height:34px">box-7</div></div>
+    <div class="b full" style="height:20px;width:50%">box-8</div>
+    <div class="col ctnr" style="width:90%;gap:10px;padding:75px 22px 24px; border:1px dashed #000000">
+      <span class="ctag">container-1</span>
+      <div class="b full" style="height:14px;width:70%">box-9</div>
+      <div class="b full" style="height:14px;width:55%">box-10</div>
+      <div class="b full" style="height:14px;width:65%">box-11</div>
+      <div class="b full" style="height:14px;width:60%">box-12</div>
+      <div class="b full" style="height:14px;width:50%">box-13</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

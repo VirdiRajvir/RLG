@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Steel — Wireframe</title>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:Georgia,serif;background:#ffffff;color:#000000}
+  .page{max-width:1080px;margin:0 auto;min-height:1080px;background:#ffffff;display:flex;flex-direction:column;justify-content:center}
+  .b{background:#ffffff;border:1px solid #000000;border-radius:2px;display:flex;align-items:center;justify-content:center;font-family:monospace;font-size:30px;color:#000000;letter-spacing:.04em;overflow:hidden;min-width:120px;min-height:76px}
+  /* Was position:absolute against .page — that anchored it to the page's
+     TOP regardless of where the (now vertically centered) .grid content
+     ends up, leaving it stranded far from the grid. In-flow with matching
+     margin instead, so it moves together with .grid as one centered unit. */
+  .banner-slot{margin:32px 0 0 40px;width:360px;height:34px}
+  .grid{display:grid;grid-template-columns:220px 1fr 200px;gap:26px;padding:0 30px 72px}
+  .panel{background:#ffffff;padding:79px 14px 29px;display:flex;flex-direction:column;gap:14px;margin-bottom:32px;position:relative}
+  .col{display:flex;flex-direction:column;gap:29px}
+  .ctnr{position:relative}
+  .ctag{position:absolute;top:4px;right:4px;z-index:5;background:#ffffff;color:#ffffff;font-family:monospace;font-size:24px;letter-spacing:.03em;padding:3px 6px;border-radius:2px;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="page">
+  <!-- Skewed banner above the grid: 367px wide inside a 1080px page (~34%),
+       fails the header literal-identification test (no <header> tag, not
+       full-width) — kept as a plain leaf box, not wrapped in a container. -->
+  <div class="b banner-slot">box-1</div>
+  <div class="grid">
+    <!-- Left sidebar column (220px): narrow layout wrapper, but the <aside>
+         itself has no background of its own — same page background as the
+         grid — so it is not a container. Each .panel inside DOES have a
+         real background (#2b323c) distinct from the page (#171b21), so
+         each panel gets its own container instead (container-1/2/3, top to
+         bottom). -->
+    <aside class="col">
+      <div class="panel">
+        <span class="ctag">container-1</span>
+        <div class="b y" style="height:16px;width:80%">box-2</div>
+        <div class="b" style="height:14px;width:90%">box-3</div>
+        <div class="b" style="height:14px;width:70%">box-4</div>
+      </div>
+      <div class="panel">
+        <span class="ctag">container-2</span>
+        <div class="b y" style="height:15px;width:55%">box-5</div>
+        <div class="b" style="height:13px;width:75%">box-6</div>
+        <div class="b" style="height:13px;width:60%">box-7</div>
+      </div>
+    </aside>
+    <!-- Centre <main> column: same reasoning — the column wrapper has no
+         background of its own, but the remaining .panel does, so it gets
+         its own container (container-3). -->
+    <main class="col">
+      <div class="panel"><span class="ctag">container-3</span><div class="b y" style="height:18px;width:46%">box-8</div><div class="b" style="height:180px">box-9</div></div>
+    </main>
+    <!-- Right sidebar column (200px): same reasoning as the left sidebar
+         above — the <aside> wrapper is not a container, but each .panel is
+         (container-4/5, top to bottom). -->
+    <aside class="col">
+      <div class="panel"><span class="ctag">container-4</span><div class="b y" style="height:16px;width:90%">box-10</div><div class="b" style="height:288px">box-11</div></div>
+      <div class="panel"><span class="ctag">container-5</span><div class="b" style="height:30px;width:80%">box-12</div><div class="b" style="height:14px;width:50%">box-13</div></div>
+    </aside>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+/* ===== ADMIN DASHBOARD ===================================================== */
+.adm-root {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  background: #212121;
+  color: #ececec;
+  font-family: 'Söhne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+}
+.adm-center { flex: 1; display: grid; place-items: center; }
+
+/* Header */
+.adm-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 22px;
+  background: #171717;
+  border-bottom: 1px solid #2f2f2f;
+  flex-shrink: 0;
+}
+.adm-header-left { display: flex; align-items: baseline; gap: 12px; }
+.adm-header-right { display: flex; align-items: center; gap: 10px; }
+.adm-title { font-size: 16px; font-weight: 600; }
+.adm-subtitle { font-size: 13px; color: #8e8e8e; }
+
+.adm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  border: 1px solid #424242;
+  border-radius: 8px;
+  color: #b4b4b4;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.adm-btn:hover { color: #ececec; border-color: #565656; background: #2a2a2a; }
+.adm-btn--icon { padding: 8px; }
+.adm-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  background: transparent;
+  border: 1px solid #424242;
+  border-radius: 8px;
+  color: #b4b4b4;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+.adm-back:hover { color: #ececec; border-color: #565656; }
+
+/* Body */
+.adm-body { flex: 1; overflow-y: auto; padding: 26px 28px 40px; }
+
+/* Stat cards */
+.adm-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  margin-bottom: 32px;
+}
+.adm-stat {
+  background: #1a1a1a;
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  padding: 18px 18px 16px;
+}
+.adm-stat-value { font-size: 28px; font-weight: 700; letter-spacing: -0.02em; color: #ececec; }
+.adm-stat-label { margin-top: 4px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #8e8e8e; }
+.adm-stat-sub { margin-top: 3px; font-size: 12px; color: #4a9eff; }
+
+.adm-section { font-size: 14px; font-weight: 600; color: #b4b4b4; margin: 0 0 14px; }
+
+/* Reference grid */
+.adm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.adm-card {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  background: #1a1a1a;
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, transform 0.1s;
+  font: inherit;
+  color: inherit;
+}
+.adm-card:hover { border-color: #4a9eff; transform: translateY(-2px); }
+.adm-card-thumb { height: 150px; background: #fff; overflow: hidden; }
+.adm-card-meta { display: flex; flex-direction: column; gap: 3px; padding: 12px 14px; }
+.adm-card-name { font-size: 14px; font-weight: 600; color: #ececec; }
+.adm-card-stats { font-size: 12px; color: #8e8e8e; }
+
+/* Shared iframe (scaled-down page preview) */
+.adm-frame { width: 100%; height: 100%; border: none; display: block; background: #fff; }
+.adm-frame--empty { background: #2a2a2a; }
+.adm-frame--sm { height: 200px; border-radius: 8px; }
+
+/* Detail (conversations) */
+.adm-detail { flex: 1; overflow-y: auto; padding: 22px 28px 40px; }
+.adm-empty { color: #8e8e8e; font-size: 14px; }
+
+.adm-thread {
+  background: #1a1a1a;
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  margin-bottom: 14px;
+  overflow: hidden;
+}
+.adm-thread-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  background: transparent;
+  border: none;
+  color: #ececec;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+.adm-thread-head:hover { background: #212121; }
+.adm-thread-title { font-size: 14px; font-weight: 600; }
+.adm-thread-meta { margin-left: auto; font-size: 12px; color: #8e8e8e; }
+
+.adm-thread-peek { display: flex; flex-direction: column; gap: 6px; padding: 0 16px 16px; }
+.adm-peek-label { font-size: 12px; color: #676767; font-style: italic; }
+
+.adm-turns { padding: 4px 16px 16px; display: flex; flex-direction: column; gap: 14px; }
+.adm-turn { display: flex; flex-direction: column; gap: 6px; }
+.adm-turn-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  color: #676767;
+}
+.adm-turn--user .adm-turn-tag { color: #4a9eff; }
+.adm-turn-text {
+  margin: 0; font-size: 14px; line-height: 1.5; color: #d4d4d4;
+  background: #212121; border: 1px solid #2f2f2f; border-radius: 8px; padding: 10px 14px;
+  white-space: pre-wrap;
+}
+.adm-turn--assistant .adm-frame { height: 320px; border: 1px solid #2f2f2f; border-radius: 8px; }
+
+/* Spinner */
+.adm-spinner {
+  width: 30px; height: 30px;
+  border: 3px solid #424242; border-top-color: #ececec; border-radius: 50%;
+  animation: adm-spin 0.8s linear infinite;
+}
+@keyframes adm-spin { to { transform: rotate(360deg); } }
+
+/* Header tab switcher */
+.adm-tabs { display: flex; align-items: center; gap: 4px; }
+.adm-tab {
+  padding: 7px 14px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #8e8e8e;
+  font: inherit;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.adm-tab:hover { color: #ececec; }
+.adm-tab--active { color: #ececec; background: #2a2a2a; border-color: #424242; }
+
+/* Participants tab */
+.adm-participants-head { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.adm-checkbox { display: flex; align-items: center; gap: 6px; font-size: 13px; opacity: 0.8; }
+.adm-review-banner { padding: 10px 14px; border-radius: 8px; background: rgba(224, 90, 78, 0.12); color: #e05a4e; margin-bottom: 12px; font-size: 13px; }
+.adm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.adm-table th, .adm-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line, #2a2a2a); }
+.adm-row--flag { background: rgba(224, 90, 78, 0.06); }
+.adm-badge { font-size: 11px; padding: 2px 6px; border-radius: 4px; background: rgba(255,255,255,0.1); margin-left: 6px; }
+.adm-badge--warn { background: rgba(224, 90, 78, 0.2); color: #e05a4e; }

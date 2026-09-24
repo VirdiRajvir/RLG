@@ -1,0 +1,97 @@
+/* Side padding scales with viewport width instead of a fixed 24px, so the
+   page actually uses the available screen on a wide monitor rather than
+   floating a narrow column in the middle of it — capped so it doesn't get
+   silly on an ultrawide.
+
+   height (not min-height) + overflow-y: auto makes .exp-root its own
+   bounded, independently-scrollable box. It has to be — App.css's global
+   reset sets html/body/#root to height:100%; overflow:hidden for the main
+   chat app's fixed-viewport layout, and /explore renders inside that same
+   #root, so content here that runs taller than the viewport (e.g. a long
+   instruction pushing a carousel's nav arrows below the fold) would
+   otherwise just get clipped with no way to reach it, rather than becoming
+   reachable by scrolling. This only affects .exp-root and everything
+   inside it — the FixedViewportFrame panels never had internal scroll and
+   still don't; they scale their fixed 1080px canvas to fit, not clip it. */
+.exp-root { height: 100vh; overflow-y: auto; background: #16171a; color: #eaeaea; padding: clamp(16px, 3vh, 40px) clamp(16px, 4vw, 64px); }
+
+/* Landing page reads as a document index, not a marketing page: a single
+   centered column with real margins on both sides (unlike every other
+   /explore page, which sits flush at .exp-root's own left padding — this
+   page is the one deliberate exception, per explicit direction). One sans
+   family throughout — matches the rest of the app, no second typeface.
+
+   .exp-landing fills .exp-root's full available height (min-height:100%,
+   resolved against .exp-root's own explicit height:100vh) as a flex
+   column, with vh-based gaps between the header/intro/glossary/index/tip
+   blocks — so the page's content spreads out to use the whole vertical
+   space at a normal viewport height instead of clustering at the top with
+   empty space below, while still scrolling via .exp-root's overflow-y if
+   a short window genuinely can't fit it all.
+
+   Headings are centered (the header block, and both section headings);
+   actual reading content — the intro paragraph, glossary definitions,
+   index row text — stays left-aligned within its own box, since centering
+   multi-line body text hurts readability regardless of how centered the
+   page around it is. */
+.exp-landing {
+  max-width: 1300px; margin: 0 auto; min-height: 100%;
+  display: flex; flex-direction: column; justify-content: space-between;
+  gap: clamp(20px, 3.5vh, 44px);
+  text-align: center;
+}
+.exp-landing-header { display: flex; flex-direction: column; gap: 6px; }
+.exp-landing-source { margin: 0; font-size: 14px; color: #8a8a8a; }
+
+.exp-landing-intro { margin: 0 auto; max-width: 75ch; text-align: left; font-size: 15.5px; line-height: 1.6; color: #d7d7d7; }
+
+.exp-section-heading { margin: 0 0 14px; font-size: 15px; font-weight: 600; color: #eaeaea; padding-bottom: 8px; border-bottom: 1px solid #2a2a2a; }
+
+/* Shared 4-sided bordered-box look, used by the glossary and every index
+   row below — one consistent structural motif instead of two different
+   treatments (a plain list here, cards there). */
+.exp-box { border: 1px solid #2a2a2a; border-radius: 10px; background: #1a1b1e; }
+
+.exp-glossary-list { display: flex; flex-direction: column; padding: 4px 20px; text-align: left; }
+.exp-glossary-row { display: flex; gap: 16px; margin: 0; padding: 12px 0; }
+.exp-glossary-row + .exp-glossary-row { border-top: 1px solid #2a2a2a; }
+.exp-glossary-row dt { flex: 0 0 90px; font-size: 13.5px; font-weight: 600; color: #eaeaea; }
+.exp-glossary-row dd { flex: 1; margin: 0; max-width: 62ch; font-size: 14px; line-height: 1.5; color: #a8a8a8; }
+
+/* 2x2 grid, not a 4-tall stack — cuts this section's height roughly in
+   half, which is what actually keeps the page from needing to scroll. */
+.exp-index { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; text-align: left; }
+@media (max-width: 700px) { .exp-index { grid-template-columns: 1fr; } }
+.exp-index-row {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 8px;
+  padding: 16px 18px; text-decoration: none; color: inherit;
+  border: 1px solid #2a2a2a; border-radius: 10px; background: #1a1b1e;
+  transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.exp-index-row:hover { background: #1f2023; border-color: #4a9eff; transform: translateY(-1px); }
+.exp-index-main { width: 100%; min-width: 0; }
+.exp-index-title { display: block; font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.exp-index-desc { margin: 0; font-size: 13.5px; line-height: 1.45; color: #a8a8a8; }
+.exp-index-meta { display: flex; align-items: center; gap: 6px; font-size: 13px; color: #8a8a8a; white-space: nowrap; }
+.exp-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+
+.exp-tip { margin: 0 auto; max-width: 1300px; padding: 14px 18px; text-align: left; background: #1f2023; border: 1px solid #2a2a2a; border-radius: 8px; font-size: 13px; line-height: 1.5; color: #a8a8a8; }
+.exp-tip strong { color: #4a9eff; font-weight: 600; }
+
+.pd-panels { display: flex; gap: 20px; margin: 20px 0; }
+.pd-panel { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+.pd-frame { width: 100%; aspect-ratio: 1; background: #242424; border-radius: 8px; overflow: hidden; }
+
+.pd-raters { display: flex; gap: clamp(20px, 3vw, 48px); margin-top: 14px; flex-wrap: wrap; }
+.pd-rater-group { flex: 1; min-width: 220px; }
+.pd-rater-group-label { display: block; font-size: 13px; color: #a8a8a8; margin-bottom: 8px; }
+.pd-rater-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.pd-rater-chip { display: inline-flex; padding: 5px 10px; border-radius: 6px; font-size: 13px; background: #1f2023; border: 1px solid #2a2a2a; color: #eaeaea; }
+
+/* Shared plain-text link style for every non-card link in /explore — grey
+   by default, brightening on hover, no underline. Applied via explicit
+   className rather than a blanket "a" selector so it never has to fight
+   .exp-landing-card's own deliberately different (card, not text-link)
+   styling for specificity. */
+.exp-link { color: #8a8a8a; text-decoration: none; cursor: pointer; transition: color 0.15s ease; }
+.exp-link:hover { color: #eaeaea; }

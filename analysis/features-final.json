@@ -1,0 +1,28 @@
+{
+  "kept": [
+    "f1_recall",
+    "f2_precision",
+    "f3_area_recall",
+    "f4_pos_euclid",
+    "f6_rel_width",
+    "f7_rel_height",
+    "f8_aspect",
+    "f9_order_consistency",
+    "f10_quadrant_agreement",
+    "f13_group_count",
+    "f14_section_uniformity"
+  ],
+  "dropped": {
+    "f5_pos_chebyshev": "redundant twin of f4_pos_euclid (Pearson r=0.98, VIF 62) — no information lost",
+    "f11_alignment_delta": "near-constant in this corpus (Δφ std 0.0095) — NOT estimable, not 'unimportant'",
+    "f12_overlap_delta": "near-constant in this corpus (Δφ std 0.0007) — NOT estimable, not 'unimportant'",
+    "f15_clip_masked": "EXCLUDED from the final metric for interpretability: in leave-one-rater-out CV on the QC-clean set it added only +2.4 points (0.808 vs 0.784) over the geometric features, is a black-box embedding (uninterpretable, not actionable for refinement), and risks capturing holistic appearance rather than layout. Retained only as a reported baseline. CLIP alone scored 0.653."
+  },
+  "kept_with_clip_12": [
+    "f1_recall", "f2_precision", "f3_area_recall", "f4_pos_euclid", "f6_rel_width",
+    "f7_rel_height", "f8_aspect", "f9_order_consistency", "f10_quadrant_agreement",
+    "f13_group_count", "f14_section_uniformity", "f15_clip_masked"
+  ],
+  "notes": "FINAL metric = 11 interpretable geometric features (CLIP discarded; see f15 note). The 12-feature set including CLIP is recorded in 'kept_with_clip_12' for reversibility / as a baseline. Condition number 6.6 (12-feature, 666-pair) / 7.0 (131 study-pair). Full 15-vector still in features.csv.",
+  "decided_on": { "generations": 110, "delta_phi_pairs": 666 }
+}

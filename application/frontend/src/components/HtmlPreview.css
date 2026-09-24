@@ -1,0 +1,89 @@
+/* ===== HTML PREVIEW ===== */
+.html-preview {
+  border: 1px solid #2f2f2f;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  transition: all 0.3s ease;
+}
+
+.html-preview.expanded {
+  position: fixed;
+  top: 5vh;
+  left: 5vw;
+  right: 5vw;
+  bottom: 5vh;
+  z-index: 1000;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Overlay behind expanded preview */
+.html-preview.expanded::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: -1;
+}
+
+.preview-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: #2f2f2f;
+  border-bottom: 1px solid #424242;
+}
+
+.preview-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #b4b4b4;
+}
+
+.preview-toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.expand-btn {
+  width: 26px;
+  height: 26px;
+  border-radius: 4px;
+  border: none;
+  background: transparent;
+  color: #b4b4b4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.expand-btn:hover {
+  background: #424242;
+  color: #ececec;
+}
+
+.preview-frame-wrapper {
+  width: 100%;
+  overflow: auto;
+  transition: height 0.3s ease;
+}
+
+.html-preview.expanded .preview-frame-wrapper {
+  height: calc(100% - 40px) !important;
+}
+
+.preview-iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  background: #fff;
+}
