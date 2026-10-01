@@ -6,7 +6,9 @@ model can regenerate a target webpage layout over several turns of natural-langu
 another AI model standing in for one, or from that same AI model under
 different instruction styles.
 
-## The experiment, in one paragraph
+![task fig](paper/figs/taskfig/taskfig.png)
+
+## Experiment Summary
 
 Every session starts from a hidden reference wireframe. A **builder model**
 (Claude Opus 4.8, fixed across every condition) generates a full HTML page
@@ -25,6 +27,75 @@ below). The three speaker conditions this produces are:
 
 A fourth, structurally separate study, **Prefelic** (preference elicitation), collects the pairwise human judgments the similarity metric itself is fit
 from. This sub-study allows us to measure trajectories of generations with a interpretable and human-preference based metric.
+
+
+## Data collected
+
+| | Count | Notes |
+|---|---|---|
+| H2A participants | 6 (of 8 recruited) | 2 excluded by the same `k≥2` qualifying filter `paper/scripts/data.py` applies — a session that never matched ≥2 boxes never produced a usable page |
+| H2A qualifying sessions | 11 | up to 2 sessions/participant, 10-minute timer each |
+| A2A base sessions | 30 | 10 sessions × 3 models (Claude uncapped, Gemini, Qwen), speaking freely |
+| Claude ablation sessions | 45 | 10 sessions × 5 more instruction-style conditions (see below) |
+| Scored references | 5 + 1 practice | `darkminimal`, `midcentury`, `retro`, `steel`, `stickynotes` (+ `apothecary`, tutorial-only) |
+| Prefelic raters | 19 (19/19 passed gold QC) | real Prolific participants, real-vs-broken attention checks |
+| Prefelic judgments | 1,029 total / 718 decisive | non-tie, non-gold comparisons used to fit the metric |
+
+**The 6 Claude conditions** (base + 5 ablations, all against the same fixed
+builder and reference set):
+
+| Condition | What changes |
+|---|---|
+| `claude_uncapped` | speaking freely, no constraints — the base comparison condition |
+| `claude_capped` | instructions limited to a short length each turn |
+| `claude_no_thinking` | extended thinking turned off |
+| `claude_element_cap` | capped at 4 distinct labeled elements per instruction |
+| `claude_human_style` | few-shot prompted toward how real participants phrase instructions |
+| `claude_human_style_no_numbers` | human-style, additionally forbidden from giving exact element counts |
+
+## Results
+
+Computed directly from `analysis/prefelic_refit/weights_final.csv` and the
+feature CSVs in `analysis/A2A_analysis/`, the same way `paper/scripts/data.py`
+does — mean score (0-1) on each session's **final turn**:
+
+| Condition | Mean final-turn score | Sessions |
+|---|---:|---:|
+| **Human (H2A)** | **0.749** | 11 |
+| Claude, speaking freely | 0.932 | 10 |
+| Gemini | 0.841 | 10 |
+| Qwen | 0.828 | 10 |
+| Claude, human-style few-shot | 0.935 | 10 |
+| Claude, short instructions only | 0.933 | 10 |
+| Claude, 4 elements per turn max | 0.930 | 10 |
+| Claude, thinking turned off | 0.927 | 10 |
+| Claude, human-style + no exact numbers | 0.905 | 5 |
+
+
+
+Every AI condition outperforms real human participants on final-turn score.
+
+
+![trends curve](paper/figs/fig1_human_vs_ai_by_model.png)
+
+### Metric fitting (Prefelic)
+
+The similarity score above comes from a Bradley-Terry preference model fit on
+the 718 decisive Prefelic judgments, reduced from an original 11 geometric
+features to **5** after correlation pruning (train-only, re-validated
+identical across all 5 CV folds):
+
+| Feature | Coefficient | Significant? |
+|---|---:|:---:|
+| `f1_recall` (did it reproduce the content) | +4.59 | ✅ |
+| `f8_aspect` (box aspect ratio match) | +1.62 | ✅ |
+| `f9_order_consistency` (reading order) | +0.70 | ✅ |
+| `f14_section_uniformity` | −0.40 | ✅ |
+| `f7_rel_height` | −0.00 | not significant, kept for completeness |
+
+Cross-validated (leave-one-rater-out) accuracy: **0.883**, vs. a 0.758
+majority-class baseline. Full derivation in
+`analysis/prefelic_refit/findings_summary.md`.
 
 ## Repository structure
 
@@ -123,70 +194,6 @@ from. This sub-study allows us to measure trajectories of generations with a int
     └── apothecary-wireframe.html        practice/tutorial reference, excluded from scoring
 ```
 
-## Data collected
-
-| | Count | Notes |
-|---|---|---|
-| H2A participants | 6 (of 8 recruited) | 2 excluded by the same `k≥2` qualifying filter `paper/scripts/data.py` applies — a session that never matched ≥2 boxes never produced a usable page |
-| H2A qualifying sessions | 11 | up to 2 sessions/participant, 10-minute timer each |
-| A2A base sessions | 30 | 10 sessions × 3 models (Claude uncapped, Gemini, Qwen), speaking freely |
-| Claude ablation sessions | 45 | 10 sessions × 5 more instruction-style conditions (see below) |
-| Scored references | 5 + 1 practice | `darkminimal`, `midcentury`, `retro`, `steel`, `stickynotes` (+ `apothecary`, tutorial-only) |
-| Prefelic raters | 19 (19/19 passed gold QC) | real Prolific participants, real-vs-broken attention checks |
-| Prefelic judgments | 1,029 total / 718 decisive | non-tie, non-gold comparisons used to fit the metric |
-
-**The 6 Claude conditions** (base + 5 ablations, all against the same fixed
-builder and reference set):
-
-| Condition | What changes |
-|---|---|
-| `claude_uncapped` | speaking freely, no constraints — the base comparison condition |
-| `claude_capped` | instructions limited to a short length each turn |
-| `claude_no_thinking` | extended thinking turned off |
-| `claude_element_cap` | capped at 4 distinct labeled elements per instruction |
-| `claude_human_style` | few-shot prompted toward how real participants phrase instructions |
-| `claude_human_style_no_numbers` | human-style, additionally forbidden from giving exact element counts |
-
-## Results
-
-Computed directly from `analysis/prefelic_refit/weights_final.csv` and the
-feature CSVs in `analysis/A2A_analysis/`, the same way `paper/scripts/data.py`
-does — mean score (0-1) on each session's **final turn**:
-
-| Condition | Mean final-turn score | Sessions |
-|---|---:|---:|
-| **Human (H2A)** | **0.749** | 11 |
-| Claude, speaking freely | 0.932 | 10 |
-| Gemini | 0.841 | 10 |
-| Qwen | 0.828 | 10 |
-| Claude, human-style few-shot | 0.935 | 10 |
-| Claude, short instructions only | 0.933 | 10 |
-| Claude, 4 elements per turn max | 0.930 | 10 |
-| Claude, thinking turned off | 0.927 | 10 |
-| Claude, human-style + no exact numbers | 0.905 | 5 |
-
-
-
-Every AI condition outperforms real human participants on final-turn score.
-
-### Metric fitting (Prefelic)
-
-The similarity score above comes from a Bradley-Terry preference model fit on
-the 718 decisive Prefelic judgments, reduced from an original 11 geometric
-features to **5** after correlation pruning (train-only, re-validated
-identical across all 5 CV folds):
-
-| Feature | Coefficient | Significant? |
-|---|---:|:---:|
-| `f1_recall` (did it reproduce the content) | +4.59 | ✅ |
-| `f8_aspect` (box aspect ratio match) | +1.62 | ✅ |
-| `f9_order_consistency` (reading order) | +0.70 | ✅ |
-| `f14_section_uniformity` | −0.40 | ✅ |
-| `f7_rel_height` | −0.00 | not significant, kept for completeness |
-
-Cross-validated (leave-one-rater-out) accuracy: **0.883**, vs. a 0.758
-majority-class baseline. Full derivation in
-`analysis/prefelic_refit/findings_summary.md`.
 
 ## Application architecture
 
