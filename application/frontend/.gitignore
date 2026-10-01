@@ -22,9 +22,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-package-lock.json
-package.json
 node_modules/
-application/node_modules/
-application/package-lock.json
-application/package.json

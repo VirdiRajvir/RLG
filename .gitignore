@@ -31,6 +31,13 @@ application/node_modules/
 application/package-lock.json
 application/package.json
 
+# ...except the explorer's own manifest and lockfile. The GitHub Pages
+# workflow runs `npm ci` against these, which needs both committed — and a
+# published frontend whose dependencies are not in the repo cannot be built
+# or audited by anyone who clones it.
+!application/frontend/package.json
+!application/frontend/package-lock.json
+
 CLAUDE.md
 screenshots/
 # Word lock/temp files
