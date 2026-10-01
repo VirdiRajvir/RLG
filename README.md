@@ -1,9 +1,8 @@
-# RLG — Reiterative Layout Generation
+# Reiterative Layout Generation (RLG)
 
 Data, code, and analysis behind **"Measuring Human-AI and AI-AI Teams in
 Multi-turn Layout Creation."** The study measures how well a fixed "builder"
-model can regenerate a target webpage layout over several turns of natural-
-language instructions, when those instructions come from a real person, from
+model can regenerate a target webpage layout over several turns of natural-language instructions, when those instructions come from a real person, from
 another AI model standing in for one, or from that same AI model under
 different instruction styles.
 
@@ -11,9 +10,8 @@ different instruction styles.
 
 Every session starts from a hidden reference wireframe. A **builder model**
 (Claude Opus 4.8, fixed across every condition) generates a full HTML page
-from scratch each turn, based only on the current instruction — it never sees
-the reference directly. A **speaker** — a real person or another AI model —
-does see the reference and the builder's latest attempt, and writes the next
+from scratch each turn, based only on the current natural language instruction. A **speaker**, a real person or another AI model,
+sees the reference and the builder's latest attempt (a generation), and writes the next
 instruction to close the gap. This repeats for several turns. Every generated
 page is scored against its reference by a geometric similarity metric fitted
 from real human pairwise preference judgments (see [Metric](#metric-fitting-prefelic)
@@ -25,10 +23,8 @@ below). The three speaker conditions this produces are:
 | **A2A** (AI-to-AI) | Claude Opus 5, Gemini 3 Flash, or Qwen2.5-VL-72B, each prompted to play the speaker role | `a2a/` |
 | **Claude Ablations** | Claude Opus 5 again, under 6 different instruction-style constraints (see table below), isolating *why* it converges faster than the other two models | `a2a/` (same pipeline, extra `DRIVER_MODELS`/turn-budget runs) |
 
-A fourth, structurally separate study — **Prefelic** (preference elicitation)
-— collects the pairwise human judgments the similarity metric itself is fit
-from. It's not part of the H2A/A2A generation loop; it's the calibration data
-that makes every score above meaningful in the first place.
+A fourth, structurally separate study, **Prefelic** (preference elicitation), collects the pairwise human judgments the similarity metric itself is fit
+from. This sub-study allows us to measure trajectories of generations with a interpretable and human-preference based metric.
 
 ## Repository structure
 
@@ -41,7 +37,7 @@ that makes every score above meaningful in the first place.
 │   ├── config.py                      builder model + the 3 driver models
 │   ├── driver.py                      runs one A2A session, turn by turn
 │   ├── generator.py, renderer.py      builder-side generation + HTML rendering
-│   ├── graph.py / graph.png           session state-machine diagram
+│   ├── graph.py / graph.png           session state-machine diagram (LangGraph)
 │   ├── references.py, store.py        reference loading, Supabase writes
 │   ├── run_a2a_study.py               batch-runs the 3 base conditions
 │   ├── run_element_cap_ablation.sh    batch-runs the element-cap Claude ablation
@@ -159,19 +155,19 @@ does — mean score (0-1) on each session's **final turn**:
 
 | Condition | Mean final-turn score | Sessions |
 |---|---:|---:|
+| **Human (H2A)** | **0.749** | 11 |
+| Claude, speaking freely | 0.932 | 10 |
+| Gemini | 0.841 | 10 |
+| Qwen | 0.828 | 10 |
 | Claude, human-style few-shot | 0.935 | 10 |
 | Claude, short instructions only | 0.933 | 10 |
-| Claude, speaking freely | 0.932 | 10 |
 | Claude, 4 elements per turn max | 0.930 | 10 |
 | Claude, thinking turned off | 0.927 | 10 |
 | Claude, human-style + no exact numbers | 0.905 | 5 |
-| Gemini | 0.841 | 10 |
-| Qwen | 0.828 | 10 |
-| **Human (H2A)** | **0.749** | 11 |
 
-Every AI condition outperforms real human participants on final-turn score —
-the gap between the strongest human sessions and the weakest Claude ablation
-is still larger than the spread across all 6 Claude ablations put together.
+
+
+Every AI condition outperforms real human participants on final-turn score.
 
 ### Metric fitting (Prefelic)
 
@@ -269,12 +265,9 @@ see each directory's `.env.example`.
   normally regenerable from Supabase but are **included as checked-in
   snapshots** so `paper/scripts/*.py` runs without database access.
 - `analysis/A2A_analysis/{a2a,prolific}/shots/` (raw per-generation
-  screenshots) are **not** included — they're only needed to regenerate
+  screenshots) are **not** included, they're only needed to regenerate
   `fig2_gallery.py` and `fig13_all_references_row.py` from scratch; both
   figures' rendered output is already in `paper/figs/`.
-- Every number in this README was computed directly from the checked-in
-  data, not copied from the paper text — regenerate with the commands above
-  to verify.
 
 ## License
 
