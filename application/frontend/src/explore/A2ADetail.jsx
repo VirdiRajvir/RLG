@@ -8,7 +8,7 @@ import { CONDITION_INFO } from './conditions'
 export default function A2ADetail() {
   const { id } = useParams()
   const session = a2aData.sessions.find((s) => s.id === id)
-  if (!session) return <p>Session not found. <Link to="/a2a" className="exp-link">Back to sessions</Link></p>
+  if (!session) return <p>Session not found. <Link to="/layout-gen" className="exp-link">Back to sessions</Link></p>
   return (
     <div>
       <BackButton />

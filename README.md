@@ -8,6 +8,13 @@ different instruction styles.
 
 ![task fig](paper/figs/taskfig/taskfig.png)
 
+**[Browse the data →](https://virdirajvir.github.io/RLG/)** — every session in
+the study, rendered: the reference each one was given, the instructions as
+typed, each page as it was generated, and the preference judgments the scoring
+metric was fitted from. Built from this repository by
+[`.github/workflows/pages.yml`](.github/workflows/pages.yml) on every push to
+`main`, so the site and the code here cannot drift apart.
+
 ## Experiment Summary
 
 Every session starts from a hidden reference wireframe. A **builder model**
@@ -153,8 +160,12 @@ majority-class baseline. Full derivation in
 │   │       │                                  session itself (ReferencePanel), Survey, Outcome
 │   │       ├── study/                     the Prefelic (binary preference) study's own
 │   │       │                              data/fixtures — studyData.js, studyFixture.js
-│   │       ├── explore/                   the public /explore data browser (h2a, a2a,
-│   │       │                              ablations, prefelic)
+│   │       ├── explore/                   the published data explorer — layout-gen
+│   │       │                              (human + unrestricted AI sessions),
+│   │       │                              claude-ablations, prefelic
+│   │       ├── explore-main.jsx           its entry point: renders explore/ alone, with
+│   │       │                              no Supabase or API dependency, which is what
+│   │       │                              lets it build and run from this repo
 │   │       └── explore-data/              the JSON explore/ reads — built by
 │   │                                      paper/scripts/explorer_export/
 │   ├── schema.sql                     chat app tables (conversations, messages)
@@ -278,4 +289,6 @@ see each directory's `.env.example`.
 
 ## License
 
-TBD.
+[MIT](LICENSE) for the code. The study data under `paper/data/`,
+`analysis/`, and `application/frontend/src/explore-data/` is released
+alongside it for research use; please cite the paper if you build on it.

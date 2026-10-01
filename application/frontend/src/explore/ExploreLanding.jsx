@@ -7,6 +7,9 @@ const baseA2ACount = a2aData.sessions.filter((s) => BASE_A2A_CONDITIONS.includes
 const claudeAblationCount = a2aData.sessions.filter((s) => CLAUDE_ABLATION_CONDITIONS.includes(s.condition)).length
 const h2aParticipantCount = new Set(h2aData.sessions.map((s) => s.participant)).size
 const prefelicRaterCount = new Set(prefelicData.pairs.flatMap((p) => p.raters.map((r) => r.rater))).size
+// Gold/QC pairs are attention checks and are not browsable, so counting them
+// here would promise more than the page shows.
+const prefelicPairCount = prefelicData.pairs.filter((p) => !p.is_gold).length
 
 function ConditionDot({ condition }) {
   return <span className="exp-dot" style={{ background: CONDITION_INFO[condition].color }} />
@@ -56,28 +59,17 @@ export default function ExploreLanding() {
       <section aria-label="Browse the data">
         <h2 className="exp-section-heading">Browse the data</h2>
         <div className="exp-index">
-          <Link className="exp-index-row" to="/h2a">
+          <Link className="exp-index-row" to="/layout-gen">
             <div className="exp-index-main">
-              <span className="exp-index-title">Human Sessions</span>
+              <span className="exp-index-title">Layout Generation</span>
               <p className="exp-index-desc">
-                Real Prolific participants typing instructions themselves, turn by turn.
+                Human sessions and unrestricted AI sessions on the same references — real
+                Prolific participants alongside Claude, Gemini, and Qwen, each instructing the
+                same builder model.
               </p>
             </div>
             <span className="exp-index-meta">
-              {h2aData.sessions.length} sessions · {h2aParticipantCount} participants
-            </span>
-          </Link>
-
-          <Link className="exp-index-row" to="/a2a">
-            <div className="exp-index-main">
-              <span className="exp-index-title">AI Sessions</span>
-              <p className="exp-index-desc">
-                Claude, Gemini, and Qwen as the speaker in place of a human, each instructing
-                the same builder model.
-              </p>
-            </div>
-            <span className="exp-index-meta">
-              {baseA2ACount} sessions
+              {h2aData.sessions.length + baseA2ACount} sessions · {h2aParticipantCount} participants
               <ConditionDot condition="claude_uncapped" />
               <ConditionDot condition="gemini" />
               <ConditionDot condition="qwen" />
@@ -103,16 +95,19 @@ export default function ExploreLanding() {
               </p>
             </div>
             <span className="exp-index-meta">
-              {prefelicData.pairs.length} pairs · {prefelicRaterCount} raters
+              {prefelicPairCount} pairs · {prefelicRaterCount} raters
             </span>
           </Link>
         </div>
       </section>
 
       <p className="exp-tip">
-        <strong>Tip:</strong> each page below is a two-level carousel — arrows or dots step
-        through references, then through that reference&apos;s sessions or pairs. Press and hold
-        an image or prompt to pause its animation; release to resume.
+        <strong>Tip:</strong> both session pages lay each session out as a filmstrip — its
+        reference stays on the left while you scroll, drag, or arrow-key along the turns on the
+        right. On Layout Generation, the buttons above the strip switch between every session
+        for that reference; Claude Ablations steps through its own with Prev/Next. Preference
+        Judgments is a carousel instead: arrows or dots step through references, then through
+        that reference&apos;s pairs.
       </p>
     </div>
   )

@@ -1,21 +1,26 @@
-.pb-gold-toggle { display: flex; align-items: center; gap: 6px; font-size: 13px; margin-bottom: 20px; }
 .pb-empty { color: #a8a8a8; font-size: 13px; }
 
-.pb-nav { display: flex; align-items: center; gap: 12px; margin: 14px 0; }
+/* What the highlight on a candidate actually means — stated once, at the top,
+   rather than left for the reader to infer from the outline. */
+.pb-intro { max-width: 75ch; margin: 6px 0 20px; font-size: 14.5px; line-height: 1.55; color: #a8a8a8; }
+
+/* Shared by both controls, each sitting centred under what it steps
+   through: the reference one under the reference panel, the pair one under
+   the two candidates. The reference variant drops the margin because it is
+   a flex child of .pb-target, whose own gap already spaces it. */
+.pb-nav { display: flex; align-items: center; justify-content: center; gap: 12px; margin: 14px 0; }
+.pb-nav--ref { margin: 0; }
 .pb-nav-label { font-size: 14px; color: #eaeaea; }
 .pb-nav-btn { background: #1f2023; border: 1px solid #2a2a2a; color: #eaeaea; border-radius: 6px; width: 32px; height: 32px; cursor: pointer; font-size: 15px; line-height: 1; flex-shrink: 0; }
 .pb-nav-btn:hover { background: #2a2b2f; }
-.pb-dots { display: flex; gap: 7px; flex-wrap: wrap; }
-.pb-dot { width: 9px; height: 9px; border-radius: 50%; border: none; background: #3a3b3f; cursor: pointer; padding: 0; }
-.pb-dot--active { background: #4a9eff; }
 
 .pb-row { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 8px 0; width: 100%; }
 .pb-frames { display: flex; gap: clamp(20px, 3vw, 40px); align-items: flex-start; justify-content: center; width: 100%; }
-/* Only one pair is ever shown at a time now (a carousel, not a scrolling
-   list), so these should fill the row the same way SessionCarousel's panes
-   do — plain flex:1 with only a floor, no width cap, so all three genuinely
-   grow to use whatever space the viewport actually has instead of settling
-   for a fixed max size on a big monitor. */
+/* Only one pair is ever shown at a time (a carousel, not a scrolling list),
+   so these should fill the row the same way the session pages' own panes do
+   — plain flex:1 with only a floor, no width cap, so all three grow to use
+   whatever space the viewport actually has instead of settling for a fixed
+   max size on a big monitor. */
 .pb-target, .pb-candidate { display: flex; flex-direction: column; gap: 10px; flex: 1 1 0; min-width: 200px; }
 .pb-target-frame, .pb-candidate-frame { width: 100%; aspect-ratio: 1; background: #242424; border-radius: 8px; overflow: hidden; }
 .pb-candidate--won { outline: 3px solid #4a9eff; border-radius: 8px; }

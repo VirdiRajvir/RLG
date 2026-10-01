@@ -1,0 +1,27 @@
+/* Global reset for the standalone data explorer.
+   
+   These are the only rules the explorer inherited from the study app's
+   App.css, lifted out so it no longer depends on a stylesheet that mostly
+   describes a chat UI this build does not include.
+
+   The overflow: hidden is load-bearing, not tidiness: .exp-root sets its own
+   height: 100vh and overflow-y: auto and scrolls itself (see Explore.css),
+   which only behaves if the document around it does not also scroll. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: 'Söhne', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Matches .exp-root's own background so there is no flash of a different
+     colour before the app mounts. */
+  background: #16171a;
+  color: #eaeaea;
+}

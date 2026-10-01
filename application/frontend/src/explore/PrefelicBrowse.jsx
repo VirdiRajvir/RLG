@@ -1,12 +1,15 @@
 // application/frontend/src/explore/PrefelicBrowse.jsx
 //
-// Same two-level carousel pattern as SessionCarousel: pick a reference
-// (arrows + dots), then step through that reference's pairs one at a time
-// (arrows + dots) — no page-scrolling list. Toggling gold/QC pairs changes
-// which references/pairs exist at all, so it resets back to the first of
-// each rather than leaving stale indices pointing at whatever used to be
-// there.
-import { useEffect, useMemo, useState } from 'react'
+// A two-level carousel: pick a reference, then step through that reference's
+// pairs one at a time — no page-scrolling list. The reference control sits
+// above the frames; the pair control sits under them, next to the outcome it
+// steps through.
+//
+// Gold/QC pairs are excluded and have no toggle. They are the attention
+// checks raters were screened on — deliberately broken pages paired with
+// real ones — so they say nothing about how the corpus was judged, and
+// showing them here only invites them to be read as ordinary judgments.
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import FixedViewportFrame from '../components/FixedViewportFrame'
 import BackLink from './BackLink'
@@ -20,6 +23,8 @@ const FEATURE_LABELS = {
   f14_section_uniformity: 'uniformity',
   f7_rel_height: 'rel. height',
 }
+
+const visiblePairs = prefelicData.pairs.filter((p) => !p.is_gold)
 
 function CandidateCell({ candidate, won }) {
   return (
@@ -38,14 +43,8 @@ function CandidateCell({ candidate, won }) {
 }
 
 export default function PrefelicBrowse() {
-  const [showGold, setShowGold] = useState(false)
   const [refIndex, setRefIndex] = useState(0)
   const [pairIndex, setPairIndex] = useState(0)
-
-  const visiblePairs = useMemo(
-    () => prefelicData.pairs.filter((p) => (showGold ? true : !p.is_gold)),
-    [showGold]
-  )
 
   const byReference = useMemo(() => {
     const groups = new Map()
@@ -54,7 +53,7 @@ export default function PrefelicBrowse() {
       groups.get(p.reference_id).push(p)
     }
     return groups
-  }, [visiblePairs])
+  }, [])
 
   const referenceIds = useMemo(() => [...byReference.keys()], [byReference])
   const safeRefIndex = Math.min(refIndex, Math.max(referenceIds.length - 1, 0))
@@ -73,49 +72,28 @@ export default function PrefelicBrowse() {
     setPairIndex(((index % currentPairs.length) + currentPairs.length) % currentPairs.length)
   }
 
-  // Toggling gold pairs changes which references/pairs even exist — start
-  // over at the first of each rather than an index that may now point
-  // somewhere else entirely.
-  useEffect(() => {
-    setRefIndex(0)
-    setPairIndex(0)
-  }, [showGold])
-
   return (
     <div>
       <BackLink to="/">Data Explorer</BackLink>
       <h1>Preference Judgments</h1>
-      <label className="pb-gold-toggle">
-        <input type="checkbox" checked={showGold} onChange={() => setShowGold((v) => !v)} />
-        Show gold/QC pairs
-      </label>
+      <p className="pb-intro">
+        The highlighted winner was chosen by the majority of raters. Raters were instructed to
+        choose the generation they perceived to be closer to the target than the other one.
+      </p>
 
       {referenceIds.length === 0
-        ? <p className="pb-empty">No pairs match the current filter.</p>
+        ? <p className="pb-empty">No pairs to show.</p>
         : (
           <>
-            <div className="pb-nav">
-              <button type="button" className="pb-nav-btn" onClick={() => goToReference(safeRefIndex - 1)} aria-label="Previous reference">←</button>
-              <span className="pb-nav-label">{currentRef?.name ?? currentRefId}</span>
-              <div className="pb-dots">
-                {referenceIds.map((refId, i) => (
-                  <button
-                    key={refId}
-                    type="button"
-                    className={`pb-dot${i === safeRefIndex ? ' pb-dot--active' : ''}`}
-                    onClick={() => goToReference(i)}
-                    aria-label={`Go to ${referenceById(refId)?.name ?? refId}`}
-                  />
-                ))}
-              </div>
-              <button type="button" className="pb-nav-btn" onClick={() => goToReference(safeRefIndex + 1)} aria-label="Next reference">→</button>
-            </div>
-
             <div className="pb-row">
               <div className="pb-frames">
                 <div className="pb-target">
                   <div className="pb-target-frame"><FixedViewportFrame html={currentRef?.html} grayscale /></div>
-                  <span>{currentRef?.name}</span>
+                  <div className="pb-nav pb-nav--ref">
+                    <button type="button" className="pb-nav-btn" onClick={() => goToReference(safeRefIndex - 1)} aria-label="Previous reference">←</button>
+                    <span className="pb-nav-label">{currentRef?.name ?? currentRefId}</span>
+                    <button type="button" className="pb-nav-btn" onClick={() => goToReference(safeRefIndex + 1)} aria-label="Next reference">→</button>
+                  </div>
                 </div>
                 <CandidateCell candidate={pair.candidate_a} won={pair.winner === 'a'} />
                 <CandidateCell candidate={pair.candidate_b} won={pair.winner === 'b'} />
@@ -124,26 +102,14 @@ export default function PrefelicBrowse() {
                 <p>{pair.split.a} vs {pair.split.b} · winner: {pair.winner ?? 'tie'}</p>
                 <Link to={`/prefelic/${pair.id}`} className="exp-link">Details →</Link>
               </div>
-            </div>
-
-            {currentPairs.length > 1 && (
-              <div className="pb-nav">
-                <button type="button" className="pb-nav-btn" onClick={() => goToPair(safePairIndex - 1)} aria-label="Previous pair">←</button>
-                <span className="pb-nav-label">Pair {safePairIndex + 1} of {currentPairs.length}</span>
-                <div className="pb-dots">
-                  {currentPairs.map((p, i) => (
-                    <button
-                      key={p.id}
-                      type="button"
-                      className={`pb-dot${i === safePairIndex ? ' pb-dot--active' : ''}`}
-                      onClick={() => goToPair(i)}
-                      aria-label={`Go to pair ${i + 1}`}
-                    />
-                  ))}
+              {currentPairs.length > 1 && (
+                <div className="pb-nav">
+                  <button type="button" className="pb-nav-btn" onClick={() => goToPair(safePairIndex - 1)} aria-label="Previous pair">←</button>
+                  <span className="pb-nav-label">Pair {safePairIndex + 1} of {currentPairs.length}</span>
+                  <button type="button" className="pb-nav-btn" onClick={() => goToPair(safePairIndex + 1)} aria-label="Next pair">→</button>
                 </div>
-                <button type="button" className="pb-nav-btn" onClick={() => goToPair(safePairIndex + 1)} aria-label="Next pair">→</button>
-              </div>
-            )}
+              )}
+            </div>
           </>
         )}
     </div>

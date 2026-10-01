@@ -1,9 +1,8 @@
 // application/frontend/src/explore/Explore.jsx
 import { Routes, Route } from 'react-router-dom'
 import ExploreLanding from './ExploreLanding'
-import H2ABrowse from './H2ABrowse'
+import LayoutGenBrowse from './LayoutGenBrowse'
 import H2ADetail from './H2ADetail'
-import A2ABrowse from './A2ABrowse'
 import A2ADetail from './A2ADetail'
 import ClaudeAblationsBrowse from './ClaudeAblationsBrowse'
 import PrefelicBrowse from './PrefelicBrowse'
@@ -15,9 +14,11 @@ export default function Explore() {
     <div className="exp-root">
       <Routes>
         <Route path="/" element={<ExploreLanding />} />
-        <Route path="/h2a" element={<H2ABrowse />} />
+        <Route path="/layout-gen" element={<LayoutGenBrowse />} />
+        {/* The browse pages for these two merged into /layout-gen, but each
+            dataset keeps its own session detail page, and the Claude
+            ablations page links into the a2a one too. */}
         <Route path="/h2a/:id" element={<H2ADetail />} />
-        <Route path="/a2a" element={<A2ABrowse />} />
         <Route path="/a2a/:id" element={<A2ADetail />} />
         <Route path="/claude-ablations" element={<ClaudeAblationsBrowse />} />
         <Route path="/prefelic" element={<PrefelicBrowse />} />

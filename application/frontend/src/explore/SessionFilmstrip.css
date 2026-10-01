@@ -1,0 +1,200 @@
+.sf-empty { color: #a8a8a8; font-size: 13px; }
+
+/* A two-column grid rather than two independent flex panes, so the reference
+   and the strip share one row boundary — the nav controls sit on the top row
+   and both images start on the second, lining up no matter how tall either
+   header gets.
+
+   minmax(0, 1fr) is the grid equivalent of min-width: 0 and is load-bearing:
+   without it the strip column refuses to shrink below its content's width,
+   the page grows instead, and overflow-x never engages at all. */
+.sf-root {
+  --sf-tick-h: 40px;
+  --sf-cell-gap: 8px;
+  /* ONE width for every panel on the page — the reference and each turn's
+     artifact are rendered at exactly this, so the two are always directly
+     comparable at a glance.
+
+     It is deliberately a viewport proportion with no px floor or cap. Browser
+     zoom shrinks the viewport measured in CSS px while making each CSS px
+     physically bigger, so a proportional width holds the same physical size
+     at any zoom level, and the same share of the screen on any display. The
+     moment this becomes an absolute length — a clamp() pinned to its px cap,
+     say — both of those properties are lost. Keep it proportional. */
+  --sf-panel-w: 30vw;
+  --sf-cell-inset: 12px;
+  display: grid;
+  grid-template-columns: var(--sf-panel-w) minmax(0, 1fr);
+  grid-template-areas:
+    'refnav head'
+    'ref    strip';
+  column-gap: clamp(20px, 3vw, 44px);
+  row-gap: 12px;
+  /* Content row sits at the top of its row; only the two nav headers above
+     it bottom-align to each other (align-self below), so the reference and
+     the strip still begin on exactly the same line. */
+  align-items: start;
+}
+
+/* `← label →` — the same control for both the reference and the session,
+   so the two levels of navigation read as one pattern. */
+.sf-nav { display: flex; align-items: center; gap: 10px; }
+.sf-nav--ref { grid-area: refnav; justify-content: center; align-self: end; }
+.sf-nav-label { font-size: 17px; font-weight: 600; color: #eaeaea; }
+.sf-nav-btn {
+  background: #1f2023; border: 1px solid #2a2a2a; color: #eaeaea;
+  border-radius: 6px; width: 32px; height: 32px; flex: none;
+  cursor: pointer; font-size: 15px; line-height: 1;
+}
+.sf-nav-btn:hover { background: #2a2b2f; border-color: #4a9eff; }
+
+.sf-head {
+  grid-area: head; align-self: end;
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.sf-head-id { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.sf-head-count { font-size: 13px; color: #8a8a8a; }
+.sf-head-link { font-size: 13px; white-space: nowrap; }
+
+/* The frame is pushed down by exactly what sits above an artifact inside the
+   strip — the 1px top border, the turn-number row, and the cell's own gap —
+   which is what puts the reference image on the same line as every artifact
+   beside it. Both sides read the same two variables, so the offset can't
+   drift out of sync with the strip it is matching. */
+.sf-reference {
+  grid-area: ref;
+  padding-top: calc(1px + var(--sf-tick-h) + var(--sf-cell-gap));
+}
+/* 1080/900 matches SessionDetail's own frames — H2A pages are 1080-wide with
+   variable height, not the fixed square the PE corpus uses. */
+.sf-reference-frame {
+  width: 100%; aspect-ratio: 1080/900;
+  background: #242424; border: 1px solid #2a2a2a; border-radius: 8px; overflow: hidden;
+}
+
+.sf-timeline { grid-area: strip; min-width: 0; display: flex; flex-direction: column; gap: 10px; }
+
+/* The strip: the one horizontal scroll container every input method (wheel,
+   drag, keys, and the scrollbar itself) ends up driving. No scroll snapping
+   — snapping pulls the strip to the nearest turn mid-gesture, which makes a
+   drag read as clipping from turn to turn instead of scrolling freely.
+   overscroll-behavior-x stops a trackpad swipe past the last turn from
+   triggering the browser's own back-navigation gesture. */
+.sf-strip {
+  display: flex; margin: 0; padding: 0; list-style: none;
+  overflow-x: auto; overscroll-behavior-x: contain;
+  cursor: grab; touch-action: pan-x;
+  border: 1px solid #2a2a2a; border-radius: 10px; background: #1a1b1e;
+}
+.sf-strip:focus-visible { outline: 2px solid #4a9eff; outline-offset: 2px; }
+.sf-strip--dragging { cursor: grabbing; user-select: none; }
+
+/* An explicit height here makes this a classic, space-taking scrollbar
+   rather than a macOS overlay one — it stays visible as an affordance, and
+   it keeps clientHeight excluding it, which is how the drag handler tells a
+   press on the scrollbar apart from a press on a turn. */
+.sf-strip::-webkit-scrollbar { height: 12px; }
+.sf-strip::-webkit-scrollbar-track { background: #16171a; border-radius: 0 0 9px 9px; }
+.sf-strip::-webkit-scrollbar-thumb { background: #3a3b3f; border-radius: 6px; border: 3px solid #16171a; }
+.sf-strip::-webkit-scrollbar-thumb:hover { background: #4a9eff; }
+
+/* No gap between cells, deliberately — the tick row below runs edge to edge
+   so the turn markers sit on one continuous line across the whole strip.
+   The visual breathing room comes from the inner elements' own side margins
+   instead. */
+/* The cell is one panel wide PLUS its own side inset, so the artifact inside
+   it measures exactly --sf-panel-w — the same as the reference frame, which
+   fills a grid column of that width. The inset is deliberately outside the
+   panel width rather than subtracted from it, so the two stay identical. */
+/* min-width: 0 is load-bearing, and its absence is subtle: a flex item
+   defaults to min-width: auto, so it can never be laid out narrower than its
+   min-content width. FixedViewportFrame measures its box with a
+   ResizeObserver and writes that measurement back as a pixel width on the
+   element inside, which then acts as exactly such a floor. The result is a
+   one-way ratchet — the cell follows --sf-panel-w when the viewport grows,
+   but the stale pixel floor props it open when the viewport shrinks, so
+   zooming in leaves the artifacts at their old size while the reference
+   (a grid item in a fixed track, which has no such floor) resizes correctly.
+   Opting out of the automatic minimum is what keeps the two in step. */
+.sf-cell {
+  flex: 0 0 calc(var(--sf-panel-w) + 2 * var(--sf-cell-inset));
+  min-width: 0;
+  display: flex; flex-direction: column; gap: var(--sf-cell-gap);
+  padding-bottom: 14px;
+}
+
+/* The number line: a 2px rule through the row's vertical centre, spanning
+   the cell's full width, with the turn's own badge painted over it in the
+   page background colour so it reads as a tick on an axis. */
+.sf-tick {
+  height: var(--sf-tick-h); flex: none;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(
+    to bottom,
+    transparent calc(50% - 1px), #2f3034 calc(50% - 1px),
+    #2f3034 calc(50% + 1px), transparent calc(50% + 1px)
+  );
+}
+.sf-tick-label {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; height: 26px; padding: 0 8px;
+  border-radius: 999px; background: #16171a; border: 1px solid #3a3b3f;
+  font-size: 13px; color: #c8c8c8; font-variant-numeric: tabular-nums;
+}
+
+.sf-cell-frame {
+  margin: 0 var(--sf-cell-inset); aspect-ratio: 1080/900;
+  background: #fff; border: 1px solid #2a2a2a; border-radius: 8px; overflow: hidden;
+}
+
+/* Fixed height, not natural height: prompt length varies from a few words to
+   a paragraph, and letting each cell size to its own text would leave the
+   score line stepping up and down across the strip. Overflow scrolls within
+   the cell instead. */
+.sf-cell-prompt {
+  margin: 0 var(--sf-cell-inset); height: 11em; overflow-y: auto;
+  padding: 10px 11px; box-sizing: border-box;
+  background: #1f2023; border: 1px solid #2a2a2a; border-radius: 8px;
+  font-size: 13px; line-height: 1.4; color: #c8c8c8; white-space: pre-wrap;
+}
+
+.sf-cell-score {
+  margin: 0 var(--sf-cell-inset); font-size: 13px; color: #8a8a8a;
+  font-variant-numeric: tabular-nums;
+}
+.sf-cell-score::before { content: 'score '; color: #6a6a6a; }
+
+.sf-hint { margin: 0; font-size: 12.5px; color: #6a6a6a; }
+
+/* Below roughly a tablet the two columns stop fitting side by side and the
+   whole thing stacks: reference nav, reference, session nav, strip. */
+@media (max-width: 860px) {
+  .sf-root {
+    /* Still one shared proportional width, just a larger share of the screen
+       now that the panels are stacked rather than side by side. */
+    --sf-panel-w: 76vw;
+    grid-template-columns: var(--sf-panel-w);
+    grid-template-areas: 'refnav' 'ref' 'head' 'strip';
+  }
+  .sf-reference { padding-top: 0; }
+}
+
+/* The session picker used when `picker='radio'`: every session for the
+   current reference as its own button, so a handful of directly comparable
+   runs can be switched between in one click rather than stepped through.
+   Wraps rather than scrolls — a reference has at most single digits of
+   sessions, and a hidden one would be a session nobody finds. */
+.sf-picker { display: flex; flex-wrap: wrap; gap: 6px; }
+.sf-picker-btn {
+  background: #1f2023; border: 1px solid #2a2a2a; color: #a8a8a8;
+  border-radius: 6px; padding: 6px 12px; cursor: pointer;
+  font-size: 13.5px; line-height: 1.2; white-space: nowrap;
+}
+.sf-picker-btn:hover { background: #2a2b2f; color: #eaeaea; }
+/* The active session is marked by a brightened border and label — and by its
+   condition colour where it has one, which is the same colour its artifact
+   frames carry in the strip below, so the two read as one selection. */
+.sf-picker-btn--active {
+  background: #2a2b2f; color: #eaeaea; border-color: #4a9eff; font-weight: 600;
+}

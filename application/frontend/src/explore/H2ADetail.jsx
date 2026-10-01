@@ -7,7 +7,7 @@ import { h2aData } from './loadExploreData'
 export default function H2ADetail() {
   const { id } = useParams()
   const session = h2aData.sessions.find((s) => s.id === id)
-  if (!session) return <p>Session not found. <Link to="/h2a" className="exp-link">Back to sessions</Link></p>
+  if (!session) return <p>Session not found. <Link to="/layout-gen" className="exp-link">Back to sessions</Link></p>
   return (
     <div>
       <BackButton />
